@@ -1,9 +1,10 @@
-import { Jost } from "next/font/google";
+import { Arimo } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
-const geistSans = Jost({
-  variable: "--font-jost-sans",
+const geistSans = Arimo({
+  variable: "--font-arimo-sans",
   subsets: ["latin"],
 });
 
@@ -32,6 +33,7 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col">
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

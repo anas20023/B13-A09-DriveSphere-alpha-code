@@ -3,6 +3,9 @@
 import { useState } from 'react'
 import { Button } from '@heroui/react'
 import Link from 'next/link'
+import Image from 'next/image'
+import { FaBars } from 'react-icons/fa'
+import { FaX } from 'react-icons/fa6'
 
 export default function Navbar({ user, onLogout }) {
     const navitems = [
@@ -21,6 +24,7 @@ export default function Navbar({ user, onLogout }) {
                     href="/"
                     className="flex items-center gap-1 text-xl font-extrabold tracking-tight"
                 >
+                    <Image src={"https://i.ibb.co.com/sJPHjJW9/Chat-GPT-Image-May-18-2026-01-33-08-AM.png"} width={50} height={50}  alt='Navbar Image'/>
                     <span className="text-green-400">Drive</span>
                     <span>Sphere</span>
                 </Link>
@@ -87,7 +91,7 @@ export default function Navbar({ user, onLogout }) {
                     onPress={() => setIsOpen((open) => !open)}
                     aria-label="Toggle menu"
                 >
-                    <span className="text-white">{isOpen ? '✕' : '☰'}</span>
+                    <span className="text-white cursor-pointer">{isOpen ? <FaX/> : <FaBars/>}</span>
                 </Button>
             </header>
 
