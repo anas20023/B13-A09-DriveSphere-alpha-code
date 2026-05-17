@@ -24,7 +24,7 @@ export default function Navbar({ user, onLogout }) {
                     href="/"
                     className="flex items-center gap-1 text-xl font-extrabold tracking-tight"
                 >
-                    <Image src={"https://i.ibb.co.com/sJPHjJW9/Chat-GPT-Image-May-18-2026-01-33-08-AM.png"} width={50} height={50}  alt='Navbar Image'/>
+                    <Image src={"https://i.ibb.co.com/sJPHjJW9/Chat-GPT-Image-May-18-2026-01-33-08-AM.png"} width={50} height={50}  alt='Navbar Image'  />
                     <span className="text-green-400">Drive</span>
                     <span>Sphere</span>
                 </Link>
