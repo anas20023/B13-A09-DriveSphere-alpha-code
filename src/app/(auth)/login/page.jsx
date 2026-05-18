@@ -30,8 +30,8 @@ const LoginPage = () => {
 
             // Example API request
             const { data, error } = await authClient.signIn.email({
-                email: email, 
-                password: password, 
+                email: email,
+                password: password,
                 rememberMe: true,
                 callbackURL: "/",
             });
@@ -55,8 +55,12 @@ const LoginPage = () => {
 
     const handleGoogleLogin = async () => {
         try {
-            // Google Login Logic Here
-
+            const data = await authClient.signIn.social({
+                provider: "google",
+            });
+            if (!data) {
+                throw new Error("Failed to sign-in")
+            }
             toast.success("Google login successful!");
 
             router.push("/");

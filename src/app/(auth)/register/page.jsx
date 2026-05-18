@@ -64,9 +64,9 @@ const RegisterPage = () => {
             setIsSubmitting(true);
 
             const { data, error } = await authClient.signUp.email({
-                name: name ,
-                email: email, 
-                password: password, 
+                name: name,
+                email: email,
+                password: password,
                 image: photo,
                 callbackURL: "/",
             });
@@ -92,7 +92,13 @@ const RegisterPage = () => {
 
     const handleGoogleSignIn = async () => {
         try {
-            toast.success("Google Sign In coming soon.");
+            const data = await authClient.signIn.social({
+                provider: "google",
+            });
+            if(!data){
+                throw new Error("Failed to sign-in")
+            }
+            toast.success("Google Login Successfully");
         } catch (err) {
             toast.error("Google sign-in failed.");
         }
