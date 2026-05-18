@@ -2,6 +2,7 @@ import { Arimo } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Arimo({
   variable: "--font-arimo-sans",
@@ -31,6 +32,7 @@ export default function RootLayout({ children }) {
       className={`${geistSans.className} h-full`}
     >
       <body className="min-h-full flex flex-col">
+        <Toaster position="top-right" />
         <Navbar />
         {children}
         <Footer />
