@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import toast from "react-hot-toast";
+import { authClient } from "@/lib/auth-client";
 
 const RegisterPage = () => {
     const router = useRouter();
@@ -62,34 +63,23 @@ const RegisterPage = () => {
         try {
             setIsSubmitting(true);
 
-            const res = await fetch("/api/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    name,
-                    email,
-                    photo,
-                    password,
-                }),
+            const { data, error } = await authClient.signUp.email({
+                name: name ,
+                email: email, 
+                password: password, 
+                image: photo,
+                callbackURL: "/",
             });
-
-            const data = await res.json();
-
-            if (!res.ok) {
+            // console.log(data)
+            if (error) {
                 throw new Error(
                     data.message || "Registration failed."
                 );
             }
-
             toast.success(
                 "Account created successfully! Redirecting..."
             );
-
-            setTimeout(() => {
-                router.push("/login");
-            }, 1500);
+            router.push("/login");
         } catch (err) {
             toast.error(
                 err.message ||

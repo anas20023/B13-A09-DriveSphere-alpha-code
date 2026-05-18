@@ -6,8 +6,12 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { FaBars } from 'react-icons/fa'
 import { FaX } from 'react-icons/fa6'
+import { authClient } from '@/lib/auth-client'
 
-export default function Navbar({ user, onLogout }) {
+export default function Navbar({ onLogout }) {
+    const { data: session } = authClient.useSession()
+    // console.log(session.user)
+    const user=session?.user
     const navitems = [
         { href: '/', label: 'Home' },
         { href: '/cars', label: 'Explore Cars' },

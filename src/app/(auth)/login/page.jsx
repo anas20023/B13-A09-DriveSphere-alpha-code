@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import toast from "react-hot-toast";
+import { authClient } from "@/lib/auth-client";
 
 const LoginPage = () => {
     const router = useRouter();
@@ -28,27 +29,19 @@ const LoginPage = () => {
             setIsSubmitting(true);
 
             // Example API request
-            const res = await fetch("/api/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email,
-                    password,
-                }),
+            const { data, error } = await authClient.signIn.email({
+                email: email, 
+                password: password, 
+                rememberMe: true,
+                callbackURL: "/",
             });
 
-            const data = await res.json();
-
-            if (!res.ok) {
+            if (error) {
                 throw new Error(
                     data.message || "Login failed."
                 );
             }
-
             toast.success("Login successful!");
-
             router.push("/");
         } catch (err) {
             toast.error(
