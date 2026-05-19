@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Toaster } from "react-hot-toast";
+import SocialLoginToast from "@/components/SocialLoginToast";
 
 const geistSans = Arimo({
   variable: "--font-arimo-sans",
@@ -36,6 +37,7 @@ export default function RootLayout({ children }) {
         <Navbar />
         {children}
         <Footer />
+        <SocialLoginToast />
       </body>
     </html>
   );

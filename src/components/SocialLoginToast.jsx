@@ -12,7 +12,6 @@ const SocialLoginToast = () => {
     }, [])
     return (
         <>
-
         </>
     )
 }
