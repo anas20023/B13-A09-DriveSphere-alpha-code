@@ -8,9 +8,10 @@ import { FaBars } from 'react-icons/fa'
 import { FaX } from 'react-icons/fa6'
 import { authClient } from '@/lib/auth-client'
 import { useRouter } from 'next/navigation'
+import NavLink from './NavLink'
 
 export default function Navbar() {
-    const router=useRouter()
+    const router = useRouter()
     const { data: session } = authClient.useSession()
     const user = session?.user
     const desktopDropdownRef = useRef(null)
@@ -49,7 +50,7 @@ export default function Navbar() {
         await authClient.signOut({
             fetchOptions: {
                 onSuccess: () => {
-                    router.push("/login"); 
+                    router.push("/login");
                 },
             },
         })
@@ -73,12 +74,7 @@ export default function Navbar() {
                     <ul className="flex items-center gap-6 text-sm font-medium">
                         {navitems.map((link) => (
                             <li key={link.href}>
-                                <Link
-                                    href={link.href}
-                                    className="relative inline-block text-gray-300 transition-colors hover:text-white after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-0 after:bg-green-400 after:transition-all hover:after:w-full"
-                                >
-                                    {link.label}
-                                </Link>
+                                <NavLink link={link.href}>{link.label}</NavLink>
                             </li>
                         ))}
                     </ul>
@@ -161,13 +157,13 @@ export default function Navbar() {
                     <ul className="flex flex-col gap-4 text-sm font-medium">
                         {navitems.map((link) => (
                             <li key={link.href}>
-                                <Link
-                                    href={link.href}
+                                <NavLink
+                                    link={link.href}
                                     onClick={() => setIsOpen(false)}
-                                    className="block text-gray-300 transition-colors hover:text-white"
+                                    className="w-full justify-start"
                                 >
                                     {link.label}
-                                </Link>
+                                </NavLink>
                             </li>
                         ))}
                     </ul>
