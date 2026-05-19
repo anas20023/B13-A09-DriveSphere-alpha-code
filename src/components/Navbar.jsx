@@ -23,6 +23,7 @@ export default function Navbar() {
         { href: '/bookings', label: 'My Bookings' },
     ]
     const profileItems = [
+        { href: '/profile', label: 'Profile' },
         { href: '/cars/add', label: 'Add Car' },
         { href: '/bookings', label: 'My Bookings' },
         { href: '/cars/my-added-cars', label: 'My Added Cars' },
