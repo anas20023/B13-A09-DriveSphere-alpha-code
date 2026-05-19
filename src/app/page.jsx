@@ -1,6 +1,7 @@
 import AvailableCars from "@/components/AvailableCars";
 import ClientFeedback from "@/components/ClientFeedback";
 import HeroSection from "@/components/HeroSection";
+import SocialLoginToast from "@/components/SocialLoginToast";
 import SubscriptionForm from "@/components/SubscriptionForm";
 import { getCars } from "@/utils/utils";
 
@@ -15,6 +16,7 @@ export default async function Home() {
       </section>
       <ClientFeedback />
       <SubscriptionForm />
+      <SocialLoginToast/>
     </>
   );
 }

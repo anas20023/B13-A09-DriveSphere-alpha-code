@@ -76,9 +76,10 @@ const RegisterPage = () => {
                     data.message || "Registration failed."
                 );
             }
-            toast.success(
-                "Account created successfully! Redirecting..."
-            );
+            // toast.success(
+            //     "Account created successfully! Redirecting..."
+            // );
+            localStorage.setItem('sociallogin','true')
             router.push("/login");
         } catch (err) {
             toast.error(

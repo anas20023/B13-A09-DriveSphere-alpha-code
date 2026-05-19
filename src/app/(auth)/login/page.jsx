@@ -61,8 +61,8 @@ const LoginPage = () => {
             if (!data) {
                 throw new Error("Failed to sign-in")
             }
-            toast.success("Google login successful!");
-
+            // toast.success("Google login successful!");
+            localStorage.setItem('sociallogin','true')
             router.push("/");
         } catch (err) {
             toast.error("Google login failed.");
