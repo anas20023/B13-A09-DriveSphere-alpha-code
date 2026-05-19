@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import { Button } from "@heroui/react";
+import Link from "next/link";
 
 const HeroSection = ({ cars }) => {
 
@@ -26,12 +27,16 @@ const HeroSection = ({ cars }) => {
                                     <h2 className="text-3xl md:text-5xl font-bold mb-3">{item.carName}</h2>
                                     <p className="text-lg md:text-xl mb-6">Pickup Location: {item.pickupLocation}</p>
                                     <div className="flex gap-3">
-                                        <Button variant="primary" className={'bg-green-600'}>
-                                            Explore Now
-                                        </Button>
-                                        <Button variant="outline" className={'text-white border-green'}>
-                                            Book Now
-                                        </Button>
+                                        <Link href={'/cars'}>
+                                            <Button variant="primary" className={'bg-green-600'}>
+                                                Explore Now
+                                            </Button>
+                                        </Link>
+                                        <Link href={`/cars/${item._id}`}>
+                                            <Button variant="outline" className={'text-white border-green'}>
+                                                Details
+                                            </Button>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
