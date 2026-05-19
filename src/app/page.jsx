@@ -1,5 +1,7 @@
 import AvailableCars from "@/components/AvailableCars";
+import ClientFeedback from "@/components/ClientFeedback";
 import HeroSection from "@/components/HeroSection";
+import SubscriptionForm from "@/components/SubscriptionForm";
 import { getCars } from "@/utils/utils";
 
 export default async function Home() {
@@ -11,6 +13,8 @@ export default async function Home() {
       <section className="min-h-screen max-w-6xl mx-auto">
         <AvailableCars />
       </section>
+      <ClientFeedback />
+      <SubscriptionForm />
     </>
   );
 }
