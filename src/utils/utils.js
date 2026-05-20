@@ -1,3 +1,6 @@
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+
 export const getCars = async () => {
     try {
         const res = await fetch(`${process.env.BACKEND_URL}/cars`)
@@ -11,8 +14,16 @@ export const getCars = async () => {
     }
 }
 export const getCarsByID = async (id) => {
+    const {token} = await auth.api.getToken({
+        headers: await headers()
+    })
+    // console.log(token)
     try {
-        const res = await fetch(`${process.env.BACKEND_URL}/cars/${id}`)
+        const res = await fetch(`${process.env.BACKEND_URL}/cars/${id}`, {
+            headers: {
+                'authorization': `Bearer ${token}`
+            }
+        })
         if (!res.ok) {
             throw new Error('Failed to fetch car');
         }
