@@ -115,7 +115,7 @@ export default function Navbar() {
                                     aria-expanded={isAvatarOpen}
                                 >
                                     <Avatar>
-                                        <Avatar.Image alt={user.name} src={user.image} />
+                                        <Avatar.Image loading="eager" alt={user.name} src={user.image} />
                                         <Avatar.Fallback>{user.name.toLocaleUpperCase().slice(0,2)}</Avatar.Fallback>
                                     </Avatar>
                                 </button>
