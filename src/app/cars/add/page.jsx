@@ -154,6 +154,7 @@ const AddCar = () => {
       router.push('/cars')
     } catch (error) {
       console.log(error.message)
+      toast.error(error.message || "Failed to Add the Car")
     }
     // console.log('New car payload:', newCar)
     // setFormData(initialFormData)
