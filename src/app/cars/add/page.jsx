@@ -15,6 +15,7 @@ import {
 } from 'react-icons/fa'
 import { useRouter } from 'next/navigation'
 import { authClient } from '@/lib/auth-client'
+import AnimateIn from '@/components/AnimateIn'
 
 const initialFormData = {
   carName: '',
@@ -34,8 +35,7 @@ const availabilityOptions = ['Available', 'Unavailable']
 const AddCar = () => {
   const router = useRouter()
   const { data: session } = authClient.useSession()
-  const user=session?.user
-  // console.log(session)
+  const user = session?.user
   const [formData, setFormData] = useState(initialFormData)
   const [errors, setErrors] = useState({})
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -126,8 +126,7 @@ const AddCar = () => {
       toast.error('Please fix the highlighted fields.')
       return
     }
-    const token = await authClient.getToken()
-    // console.log(token)
+
     setIsSubmitting(true)
 
     const newCar = {
@@ -140,37 +139,50 @@ const AddCar = () => {
       description: formData.description.trim(),
       availabilityStatus: formData.availabilityStatus,
       booked: Number(formData.booked),
-      uploaded_by:user.id
+      uploaded_by: user?.id
     }
+    
     try {
+      const { data: tokenData } = await authClient.token()
+      const token = tokenData?.token
+
+      if (!token) {
+        throw new Error('Authentication token unavailable.')
+      }
+
       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cars`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'authorization':`Bearer ${token}`
+          'authorization': `Bearer ${token}`
         },
         body: JSON.stringify(newCar)
       })
-      // console.log(res)
-      toast.success(res.message || 'Car information is ready to add.')
+
+      const data = await res.json().catch(() => ({}))
+
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to Add the Car")
+      }
+
+      toast.success(data.message || 'Car added successfully.')
       router.push('/cars')
     } catch (error) {
       console.log(error.message)
       toast.error(error.message || "Failed to Add the Car")
+    } finally {
+      setIsSubmitting(false)
     }
-    // console.log('New car payload:', newCar)
-    // setFormData(initialFormData)
-    setIsSubmitting(false)
   }
 
   const inputClass =
-    'mt-2 w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-gray-900 outline-none transition focus:border-green-500 focus:bg-white focus:ring-4 focus:ring-green-100'
-  const labelClass = 'text-sm font-bold text-gray-800'
-  const errorClass = 'mt-2 text-sm font-semibold text-red-600'
+    'mt-2 w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-green-500 dark:focus:border-green-400 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-green-100 dark:focus:ring-green-950/40'
+  const labelClass = 'text-sm font-bold text-slate-800 dark:text-slate-250'
+  const errorClass = 'mt-2 text-sm font-semibold text-red-650 dark:text-red-400'
 
   return (
-    <main className="bg-gray-50">
-      <section className="bg-green-950 px-4 py-16 text-white sm:px-6 lg:px-8">
+    <main className="bg-slate-50 dark:bg-slate-950 transition-colors duration-300 min-h-screen">
+      <section className="bg-green-950 dark:bg-slate-900 border-b border-green-900 dark:border-slate-800 px-4 py-16 text-white sm:px-6 lg:px-8 transition-colors duration-300">
         <div className="mx-auto max-w-6xl">
           <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-green-300">
             Add New Car
@@ -179,7 +191,7 @@ const AddCar = () => {
             <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
               Add a rental-ready vehicle to DriveSphere
             </h1>
-            <p className="mt-5 text-base leading-7 text-gray-300 sm:text-lg">
+            <p className="mt-5 text-base leading-7 text-green-105/70 dark:text-slate-350 sm:text-lg">
               Fill in every vehicle detail, set the availability status, and keep
               your fleet information consistent for customers.
             </p>
@@ -189,286 +201,290 @@ const AddCar = () => {
 
       <section className="px-4 py-14 sm:px-6 lg:px-8">
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1fr_360px]">
-          <form
-            onSubmit={handleSubmit}
-            noValidate
-            className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xl"
-          >
-            <div className="border-b border-gray-100 p-6 sm:p-8">
-              <div className="flex items-center gap-3">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-100 text-green-700">
-                  <FaClipboardList />
-                </span>
-                <div>
-                  <h2 className="text-2xl font-extrabold text-gray-900">
-                    Car Information
-                  </h2>
-                  <p className="mt-1 text-sm text-gray-500">
-                    All fields are mandatory.
-                  </p>
+          <AnimateIn variant="slideUp" className="w-full">
+            <form
+              onSubmit={handleSubmit}
+              noValidate
+              className="overflow-hidden rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl dark:shadow-slate-950/40 flex flex-col h-full"
+            >
+              <div className="border-b border-slate-100 dark:border-slate-800 p-6 sm:p-8">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-50 dark:bg-green-950/40 text-green-700 dark:text-green-300">
+                    <FaClipboardList />
+                  </span>
+                  <div>
+                    <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white">
+                      Car Information
+                    </h2>
+                    <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                      All fields are mandatory.
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="grid gap-6 p-6 sm:grid-cols-2 sm:p-8">
-              <Field
-                error={errors.carName}
-                icon={<FaCarSide />}
-                label="Car Name"
-                labelClass={labelClass}
-                errorClass={errorClass}
-              >
-                <input
-                  type="text"
-                  name="carName"
-                  value={formData.carName}
-                  onChange={handleChange}
-                  placeholder="Hyundai Tucson"
-                  required
-                  className={inputClass}
-                />
-              </Field>
-
-              <Field
-                error={errors.dailyRentPrice}
-                icon={<FaDollarSign />}
-                label="Daily Rent Price"
-                labelClass={labelClass}
-                errorClass={errorClass}
-              >
-                <input
-                  type="number"
-                  name="dailyRentPrice"
-                  value={formData.dailyRentPrice}
-                  onChange={handleChange}
-                  placeholder="95"
-                  min="1"
-                  step="1"
-                  required
-                  className={inputClass}
-                />
-              </Field>
-
-              <Field
-                error={errors.carType}
-                icon={<FaCarSide />}
-                label="Car Type"
-                labelClass={labelClass}
-                errorClass={errorClass}
-              >
-                <select
-                  name="carType"
-                  value={formData.carType}
-                  onChange={handleChange}
-                  required
-                  className={`${inputClass} cursor-pointer`}
-                >
-                  <option value="">Select car type</option>
-                  {carTypes.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
-                    </option>
-                  ))}
-                </select>
-              </Field>
-
-              <Field
-                error={errors.seatCapacity}
-                icon={<FaUsers />}
-                label="Seat Capacity"
-                labelClass={labelClass}
-                errorClass={errorClass}
-              >
-                <input
-                  type="number"
-                  name="seatCapacity"
-                  value={formData.seatCapacity}
-                  onChange={handleChange}
-                  placeholder="5"
-                  min="1"
-                  step="1"
-                  required
-                  className={inputClass}
-                />
-              </Field>
-
-              <Field
-                error={errors.pickupLocation}
-                icon={<FaMapMarkerAlt />}
-                label="Pickup Location"
-                labelClass={labelClass}
-                errorClass={errorClass}
-              >
-                <input
-                  type="text"
-                  name="pickupLocation"
-                  value={formData.pickupLocation}
-                  onChange={handleChange}
-                  placeholder="Khulna"
-                  required
-                  className={inputClass}
-                />
-              </Field>
-
-              <Field
-                error={errors.availabilityStatus}
-                icon={<FaCheckCircle />}
-                label="Availability Status"
-                labelClass={labelClass}
-                errorClass={errorClass}
-              >
-                <select
-                  name="availabilityStatus"
-                  value={formData.availabilityStatus}
-                  onChange={handleChange}
-                  required
-                  className={`${inputClass} cursor-pointer`}
-                >
-                  <option value="">Select status</option>
-                  {availabilityOptions.map((status) => (
-                    <option key={status} value={status}>
-                      {status}
-                    </option>
-                  ))}
-                </select>
-              </Field>
-
-              <Field
-                error={errors.booked}
-                icon={<FaCalendarCheck />}
-                label="Booked Count"
-                labelClass={labelClass}
-                errorClass={errorClass}
-              >
-                <input
-                  type="number"
-                  name="booked"
-                  value={formData.booked}
-                  onChange={handleChange}
-                  placeholder="0"
-                  min="0"
-                  step="1"
-                  required
-                  className={inputClass}
-                />
-              </Field>
-
-              <Field
-                error={errors.imageURL}
-                icon={<FaImage />}
-                label="Image URL"
-                labelClass={labelClass}
-                errorClass={errorClass}
-              >
-                <input
-                  type="url"
-                  name="imageURL"
-                  value={formData.imageURL}
-                  onChange={handleChange}
-                  placeholder="https://images.unsplash.com/photo-1567938637147-f2d28cf0478c"
-                  required
-                  className={inputClass}
-                />
-              </Field>
-
-              <div className="sm:col-span-2">
+              <div className="grid gap-6 p-6 sm:grid-cols-2 sm:p-8 grow">
                 <Field
-                  error={errors.description}
-                  icon={<FaClipboardList />}
-                  label="Description"
+                  error={errors.carName}
+                  icon={<FaCarSide />}
+                  label="Car Name"
                   labelClass={labelClass}
                   errorClass={errorClass}
                 >
-                  <textarea
-                    name="description"
-                    value={formData.description}
+                  <input
+                    type="text"
+                    name="carName"
+                    value={formData.carName}
                     onChange={handleChange}
-                    placeholder="Modern SUV ideal for family trips and long drives."
-                    rows={5}
+                    placeholder="Hyundai Tucson"
                     required
-                    className={`${inputClass} resize-none leading-7`}
+                    className={inputClass}
                   />
                 </Field>
+
+                <Field
+                  error={errors.dailyRentPrice}
+                  icon={<FaDollarSign />}
+                  label="Daily Rent Price"
+                  labelClass={labelClass}
+                  errorClass={errorClass}
+                >
+                  <input
+                    type="number"
+                    name="dailyRentPrice"
+                    value={formData.dailyRentPrice}
+                    onChange={handleChange}
+                    placeholder="95"
+                    min="1"
+                    step="1"
+                    required
+                    className={inputClass}
+                  />
+                </Field>
+
+                <Field
+                  error={errors.carType}
+                  icon={<FaCarSide />}
+                  label="Car Type"
+                  labelClass={labelClass}
+                  errorClass={errorClass}
+                >
+                  <select
+                    name="carType"
+                    value={formData.carType}
+                    onChange={handleChange}
+                    required
+                    className={`${inputClass} cursor-pointer`}
+                  >
+                    <option value="">Select car type</option>
+                    {carTypes.map((type) => (
+                      <option key={type} value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
+
+                <Field
+                  error={errors.seatCapacity}
+                  icon={<FaUsers />}
+                  label="Seat Capacity"
+                  labelClass={labelClass}
+                  errorClass={errorClass}
+                >
+                  <input
+                    type="number"
+                    name="seatCapacity"
+                    value={formData.seatCapacity}
+                    onChange={handleChange}
+                    placeholder="5"
+                    min="1"
+                    step="1"
+                    required
+                    className={inputClass}
+                  />
+                </Field>
+
+                <Field
+                  error={errors.pickupLocation}
+                  icon={<FaMapMarkerAlt />}
+                  label="Pickup Location"
+                  labelClass={labelClass}
+                  errorClass={errorClass}
+                >
+                  <input
+                    type="text"
+                    name="pickupLocation"
+                    value={formData.pickupLocation}
+                    onChange={handleChange}
+                    placeholder="Khulna"
+                    required
+                    className={inputClass}
+                  />
+                </Field>
+
+                <Field
+                  error={errors.availabilityStatus}
+                  icon={<FaCheckCircle />}
+                  label="Availability Status"
+                  labelClass={labelClass}
+                  errorClass={errorClass}
+                >
+                  <select
+                    name="availabilityStatus"
+                    value={formData.availabilityStatus}
+                    onChange={handleChange}
+                    required
+                    className={`${inputClass} cursor-pointer`}
+                  >
+                    <option value="">Select status</option>
+                    {availabilityOptions.map((status) => (
+                      <option key={status} value={status}>
+                        {status}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
+
+                <Field
+                  error={errors.booked}
+                  icon={<FaCalendarCheck />}
+                  label="Booked Count"
+                  labelClass={labelClass}
+                  errorClass={errorClass}
+                >
+                  <input
+                    type="number"
+                    name="booked"
+                    value={formData.booked}
+                    onChange={handleChange}
+                    placeholder="0"
+                    min="0"
+                    step="1"
+                    required
+                    className={inputClass}
+                  />
+                </Field>
+
+                <Field
+                  error={errors.imageURL}
+                  icon={<FaImage />}
+                  label="Image URL"
+                  labelClass={labelClass}
+                  errorClass={errorClass}
+                >
+                  <input
+                    type="url"
+                    name="imageURL"
+                    value={formData.imageURL}
+                    onChange={handleChange}
+                    placeholder="https://images.unsplash.com/photo-1567938637147-f2d28cf0478c"
+                    required
+                    className={inputClass}
+                  />
+                </Field>
+
+                <div className="sm:col-span-2">
+                  <Field
+                    error={errors.description}
+                    icon={<FaClipboardList />}
+                    label="Description"
+                    labelClass={labelClass}
+                    errorClass={errorClass}
+                  >
+                    <textarea
+                      name="description"
+                      value={formData.description}
+                      onChange={handleChange}
+                      placeholder="Modern SUV ideal for family trips and long drives."
+                      rows={5}
+                      required
+                      className={`${inputClass} resize-none leading-7`}
+                    />
+                  </Field>
+                </div>
               </div>
-            </div>
 
-            <div className="flex flex-col gap-3 border-t border-gray-100 bg-gray-50 px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
-              <p className="text-sm font-medium text-gray-500">
-                Review every field before adding the car.
-              </p>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-green-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-green-600/20 transition hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-200 disabled:cursor-not-allowed disabled:opacity-70"
-              >
-                <FaCheckCircle />
-                {isSubmitting ? 'Adding Car...' : 'Add Car'}
-              </button>
-            </div>
-
-            <div className="h-1.5 bg-linear-to-r from-green-400 to-green-800" />
-          </form>
-
-          <aside className="h-fit overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xl">
-            <div className="relative min-h-56 overflow-hidden bg-gray-200">
-              {imagePreview ? (
-                <Image
-                  src={imagePreview}
-                  alt={formData.carName || 'Car preview'}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 360px"
-                />
-              ) : (
-                <div className="flex h-56 flex-col items-center justify-center gap-3 bg-green-950 text-green-100">
-                  <FaImage className="text-4xl" />
-                  <p className="text-sm font-semibold">Image preview</p>
-                </div>
-              )}
-              <div className="absolute inset-0 bg-linear-to-t from-black/45 via-transparent to-transparent" />
-              <span className="absolute left-4 top-4 rounded-full bg-green-600 px-3 py-1 text-xs font-bold text-white shadow-md">
-                {formData.availabilityStatus || 'Status'}
-              </span>
-              <span className="absolute bottom-4 right-4 rounded-lg bg-white/95 px-3 py-1 text-sm font-extrabold text-green-800 shadow-md">
-                ${formData.dailyRentPrice || '0'} / day
-              </span>
-            </div>
-
-            <div className="p-5">
-              <p className="mb-3 inline-flex items-center gap-2 rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">
-                <FaCarSide />
-                {formData.carType || 'Car type'}
-              </p>
-              <h3 className="line-clamp-2 text-2xl font-black text-gray-900">
-                {formData.carName || 'Car name'}
-              </h3>
-
-              <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
-                <div className="rounded-xl bg-gray-50 p-3">
-                  <p className="flex items-center gap-2 font-semibold text-gray-900">
-                    <FaUsers className="text-green-600" />
-                    {formData.seatCapacity || '0'} seats
-                  </p>
-                  <p className="mt-1 text-xs text-gray-500">Capacity</p>
-                </div>
-                <div className="rounded-xl bg-gray-50 p-3">
-                  <p className="flex items-center gap-2 font-semibold text-gray-900">
-                    <FaMapMarkerAlt className="text-green-600" />
-                    <span className="line-clamp-1">
-                      {formData.pickupLocation || 'Pickup'}
-                    </span>
-                  </p>
-                  <p className="mt-1 text-xs text-gray-500">Location</p>
-                </div>
+              <div className="flex flex-col gap-3 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/60 px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
+                  Review every field before adding the car.
+                </p>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-green-600 dark:bg-green-500 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-green-600/20 hover:bg-green-700 dark:hover:bg-green-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
+                >
+                  <FaCheckCircle />
+                  {isSubmitting ? 'Adding Car...' : 'Add Car'}
+                </button>
               </div>
 
-              <p className="mt-4 line-clamp-4 text-sm leading-6 text-gray-600">
-                {formData.description ||
-                  'A short vehicle description will appear here as you type.'}
-              </p>
-            </div>
-            <div className="h-1.5 bg-linear-to-r from-green-400 to-green-800" />
-          </aside>
+              <div className="h-1.5 bg-linear-to-r from-green-500 via-emerald-400 to-green-600" />
+            </form>
+          </AnimateIn>
+
+          <AnimateIn variant="scaleIn" delay={0.15}>
+            <aside className="h-fit overflow-hidden rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl dark:shadow-slate-950/40">
+              <div className="relative h-56 overflow-hidden bg-slate-150 dark:bg-slate-850">
+                {imagePreview ? (
+                  <Image
+                    src={imagePreview}
+                    alt={formData.carName || 'Car preview'}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 360px"
+                  />
+                ) : (
+                  <div className="flex h-56 flex-col items-center justify-center gap-3 bg-slate-100 dark:bg-slate-950 text-slate-500 dark:text-slate-400">
+                    <FaImage className="text-4xl text-green-600 dark:text-green-400" />
+                    <p className="text-sm font-bold">Image preview</p>
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-linear-to-t from-black/45 via-transparent to-transparent" />
+                <span className="absolute left-4 top-4 rounded-full bg-green-600 dark:bg-green-500 px-3 py-1 text-xs font-bold text-white shadow-md">
+                  {formData.availabilityStatus || 'Status'}
+                </span>
+                <span className="absolute bottom-4 right-4 rounded-lg bg-white/95 dark:bg-slate-950/95 border border-slate-100/30 dark:border-slate-800/30 px-3 py-1 text-sm font-extrabold text-green-850 dark:text-green-400 shadow-md">
+                  ${formData.dailyRentPrice || '0'} / day
+                </span>
+              </div>
+
+              <div className="p-5">
+                <p className="mb-3 inline-flex items-center gap-2 rounded-full bg-green-50 dark:bg-green-950/40 px-3 py-1 text-xs font-bold text-green-705 dark:text-green-300">
+                  <FaCarSide />
+                  {formData.carType || 'Car type'}
+                </p>
+                <h3 className="line-clamp-2 text-2xl font-black text-slate-900 dark:text-white">
+                  {formData.carName || 'Car name'}
+                </h3>
+
+                <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
+                  <div className="rounded-xl bg-slate-50 dark:bg-slate-950 p-3">
+                    <p className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
+                      <FaUsers className="text-green-600 dark:text-green-400" />
+                      {formData.seatCapacity || '0'} seats
+                    </p>
+                    <p className="mt-1 text-xs text-slate-500 dark:text-slate-450">Capacity</p>
+                  </div>
+                  <div className="rounded-xl bg-slate-50 dark:bg-slate-950 p-3">
+                    <p className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
+                      <FaMapMarkerAlt className="text-green-600 dark:text-green-400" />
+                      <span className="line-clamp-1">
+                        {formData.pickupLocation || 'Pickup'}
+                      </span>
+                    </p>
+                    <p className="mt-1 text-xs text-slate-500 dark:text-slate-450">Location</p>
+                  </div>
+                </div>
+
+                <p className="mt-4 line-clamp-4 text-sm leading-6 text-slate-650 dark:text-slate-400">
+                  {formData.description ||
+                    'A short vehicle description will appear here as you type.'}
+                </p>
+              </div>
+              <div className="h-1.5 bg-linear-to-r from-green-500 via-emerald-400 to-green-600" />
+            </aside>
+          </AnimateIn>
         </div>
       </section>
     </main>
@@ -478,7 +494,7 @@ const AddCar = () => {
 const Field = ({ children, error, icon, label, labelClass, errorClass }) => (
   <label className="block">
     <span className={`${labelClass} flex items-center gap-2`}>
-      <span className="text-green-600">{icon}</span>
+      <span className="text-green-600 dark:text-green-400">{icon}</span>
       {label}
     </span>
     {children}

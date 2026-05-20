@@ -16,6 +16,7 @@ import {
 } from 'react-icons/fa'
 import { FaBookmark } from 'react-icons/fa6'
 import { useRouter } from 'next/navigation'
+
 const CarBookingCard = ({ car }) => {
     const router = useRouter()
     const { data: session } = authClient.useSession()
@@ -86,7 +87,6 @@ const CarBookingCard = ({ car }) => {
 
         try {
             const { data: tokenData } = await authClient.token()
-            // console.log(tokenData)
             const token = tokenData?.token
 
             if (!token) {
@@ -110,7 +110,7 @@ const CarBookingCard = ({ car }) => {
 
             toast.success(data.message || 'Successfully Booked the Car !')
             setIsBookingModalOpen(false)
-            router.push('/cars')
+            router.push('/bookings')
         } catch (error) {
             console.log(error)
             toast.error(error.message || "Failed to Book the Car !")
@@ -120,9 +120,9 @@ const CarBookingCard = ({ car }) => {
     }
     return (
         <>
-            <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-lg">
+            <div className="overflow-hidden rounded-xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg dark:shadow-slate-950/50">
                 <div className="grid grid-cols-1 lg:grid-cols-2">
-                    <div className="relative min-h-64 overflow-hidden bg-gray-200 sm:min-h-88 lg:min-h-full">
+                    <div className="relative min-h-64 overflow-hidden bg-slate-150 dark:bg-slate-800 sm:min-h-88 lg:min-h-full">
                         <Image
                             src={car.imageURL}
                             alt={car.carName}
@@ -131,83 +131,85 @@ const CarBookingCard = ({ car }) => {
                             className="object-cover"
                             sizes="(max-width: 1024px) 100vw, 50vw"
                         />
-                        <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
-                        <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-green-600 px-3 py-1.5 text-xs font-bold text-white shadow-lg">
+                        <div className="absolute inset-0 bg-linear-to-t from-black/45 via-transparent to-transparent" />
+                        <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-green-600 dark:bg-green-500 px-3 py-1.5 text-xs font-bold text-white shadow-lg">
                             <FaCheckCircle />
                             {car.availabilityStatus}
                         </span>
                     </div>
 
-                    <div className="flex flex-col p-5 sm:p-6 lg:p-7">
-                        <p className="mb-2 inline-flex w-fit items-center gap-2 rounded-full bg-green-50 px-3 py-1.5 text-xs font-bold text-green-700">
-                            <FaCarSide />
-                            {car.carType}
-                        </p>
-
-                        <h1 className="text-2xl font-black tracking-tight text-gray-900 sm:text-4xl">
-                            {car.carName}
-                        </h1>
-
-                        <p className="mt-3 text-sm leading-6 text-gray-600 sm:text-base">
-                            {car.description}
-                        </p>
-
-                        <div className="mt-5 grid grid-cols-3 gap-3">
-                            <div className="rounded-xl bg-gray-50 p-3">
-                                <p className="text-xs font-semibold uppercase text-gray-500">
-                                    Rent
-                                </p>
-                                <p className="mt-1 text-xl font-black text-green-700">
-                                    ${car.dailyRentPrice}
-                                </p>
-                                <p className="text-xs text-gray-500">per day</p>
-                            </div>
-
-                            <div className="rounded-xl bg-gray-50 p-3">
-                                <p className="text-xs font-semibold uppercase text-gray-500">
-                                    Seats
-                                </p>
-                                <p className="mt-1 flex items-center gap-2 text-lg font-black text-gray-900">
-                                    <FaUsers className="text-green-600" />
-                                    {car.seatCapacity}
-                                </p>
-                                <p className="text-xs text-gray-500">passengers</p>
-                            </div>
-
-                            <div className="rounded-xl bg-gray-50 p-3">
-                                <p className="text-xs font-semibold uppercase text-gray-500">
-                                    Pickup
-                                </p>
-                                <p className="mt-1 flex items-start gap-2 text-sm font-black text-gray-900 sm:text-base">
-                                    <FaMapMarkerAlt className="shrink-0 text-green-600" />
-                                    <span className="min-w-0 wrap-break-word leading-tight">{car.pickupLocation}</span>
-                                </p>
-                                <p className="text-xs text-gray-500">location</p>
-                            </div>
-                        </div>
-
-                        <div className="mt-5 rounded-xl border border-green-100 bg-green-50 px-4 py-3">
-                            <p className="text-sm font-bold text-green-800">
-                                <FaBookmark size={16} className='inline-block mx-2' />  Booked by {car.booked}
+                    <div className="flex flex-col p-5 sm:p-6 lg:p-7 justify-between">
+                        <div>
+                            <p className="mb-2 inline-flex w-fit items-center gap-2 rounded-full bg-green-50 dark:bg-green-950/40 px-3 py-1.5 text-xs font-bold text-green-700 dark:text-green-300">
+                                <FaCarSide />
+                                {car.carType}
                             </p>
+
+                            <h1 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white sm:text-4xl">
+                                {car.carName}
+                            </h1>
+
+                            <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400 sm:text-base">
+                                {car.description}
+                            </p>
+
+                            <div className="mt-5 grid grid-cols-3 gap-3">
+                                <div className="rounded-xl bg-slate-50 dark:bg-slate-950 p-3">
+                                    <p className="text-xs font-bold uppercase text-slate-500 dark:text-slate-450">
+                                        Rent
+                                    </p>
+                                    <p className="mt-1 text-xl font-black text-green-700 dark:text-green-455">
+                                        ${car.dailyRentPrice}
+                                    </p>
+                                    <p className="text-xs text-slate-500 dark:text-slate-450">per day</p>
+                                </div>
+
+                                <div className="rounded-xl bg-slate-50 dark:bg-slate-950 p-3">
+                                    <p className="text-xs font-bold uppercase text-slate-500 dark:text-slate-455">
+                                        Seats
+                                    </p>
+                                    <p className="mt-1 flex items-center gap-2 text-lg font-black text-slate-900 dark:text-white">
+                                        <FaUsers className="text-green-600 dark:text-green-400" />
+                                        {car.seatCapacity}
+                                    </p>
+                                    <p className="text-xs text-slate-500 dark:text-slate-450">passengers</p>
+                                </div>
+
+                                <div className="rounded-xl bg-slate-50 dark:bg-slate-950 p-3">
+                                    <p className="text-xs font-bold uppercase text-slate-500 dark:text-slate-455">
+                                        Pickup
+                                    </p>
+                                    <p className="mt-1 flex items-start gap-2 text-sm font-black text-slate-900 dark:text-white sm:text-base">
+                                        <FaMapMarkerAlt className="shrink-0 text-green-600 dark:text-green-400" />
+                                        <span className="min-w-0 wrap-break-word leading-tight capitalize">{car.pickupLocation.toLowerCase()}</span>
+                                    </p>
+                                    <p className="text-xs text-slate-500 dark:text-slate-450">location</p>
+                                </div>
+                            </div>
+
+                            <div className="mt-5 rounded-xl border border-green-105 dark:border-green-900/60 bg-green-50 dark:bg-green-950/30 px-4 py-3">
+                                <p className="text-sm font-bold text-green-800 dark:text-green-300">
+                                    <FaBookmark size={16} className='inline-block mx-2 text-green-600 dark:text-green-400' />  Booked by {car.booked}
+                                </p>
+                            </div>
                         </div>
 
                         <button
                             type="button"
                             onClick={() => setIsBookingModalOpen(true)}
-                            className="mt-5 inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-green-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-green-600/20 transition hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-200"
+                            className="mt-6 inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-green-600 dark:bg-green-600 hover:bg-green-700 dark:hover:bg-green-700 px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-green-600/25 transition duration-300 focus:outline-none"
                         >
                             <FaCalendarCheck />
                             Book Now
                         </button>
                     </div>
                 </div>
-                <div className="h-1.5 bg-linear-to-r from-green-400 to-green-800" />
+                <div className="h-1.5 bg-linear-to-r from-green-500 via-emerald-400 to-green-600" />
             </div>
 
             {isBookingModalOpen ? (
                 <div
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 py-6"
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs px-4 py-6"
                     role="dialog"
                     aria-modal="true"
                     aria-labelledby="booking-modal-title"
@@ -219,25 +221,25 @@ const CarBookingCard = ({ car }) => {
                 >
                     <form
                         onSubmit={handleBooking}
-                        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white shadow-2xl"
+                        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl animate-in fade-in zoom-in-95 duration-200"
                     >
-                        <div className="flex items-start justify-between gap-4 border-b border-gray-100 p-5 sm:p-6">
+                        <div className="flex items-start justify-between gap-4 border-b border-slate-100 dark:border-slate-800 p-5 sm:p-6">
                             <div>
-                                <p className="mb-2 inline-flex w-fit items-center gap-2 rounded-full bg-green-50 px-3 py-1 text-xs font-bold text-green-700">
+                                <p className="mb-2 inline-flex w-fit items-center gap-2 rounded-full bg-green-50 dark:bg-green-950/40 px-3 py-1 text-xs font-bold text-green-700 dark:text-green-300">
                                     <FaCarSide />
                                     {car.carType}
                                 </p>
-                                <h2 id="booking-modal-title" className="text-2xl font-black text-gray-900">
+                                <h2 id="booking-modal-title" className="text-2xl font-black text-slate-900 dark:text-white">
                                     Book {car.carName}
                                 </h2>
-                                <p className="mt-1 text-sm font-medium text-gray-500">
+                                <p className="mt-1 text-sm font-medium text-slate-500 dark:text-slate-400">
                                     ${car.dailyRentPrice} per day from {car.pickupLocation}
                                 </p>
                             </div>
                             <button
                                 type="button"
                                 onClick={() => setIsBookingModalOpen(false)}
-                                className="inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-gray-200 text-gray-500 transition hover:border-green-200 hover:bg-green-50 hover:text-green-700 focus:outline-none focus:ring-4 focus:ring-green-100"
+                                className="inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 transition hover:border-green-200 dark:hover:border-green-900 hover:bg-green-50 dark:hover:bg-green-950/30 hover:text-green-700 dark:hover:text-green-400 focus:outline-none"
                                 aria-label="Close booking modal"
                             >
                                 <FaTimes />
@@ -246,8 +248,8 @@ const CarBookingCard = ({ car }) => {
 
                         <div className="grid gap-4 p-5 sm:grid-cols-2 sm:p-6">
                             <label className="block">
-                                <span className="flex items-center gap-2 text-sm font-bold text-gray-800">
-                                    <FaCalendarAlt className="text-green-600" />
+                                <span className="flex items-center gap-2 text-sm font-bold text-slate-800 dark:text-slate-250">
+                                    <FaCalendarAlt className="text-green-600 dark:text-green-400" />
                                     Booking Date
                                 </span>
                                 <input
@@ -257,13 +259,13 @@ const CarBookingCard = ({ car }) => {
                                     onChange={handleChange}
                                     min={new Date().toISOString().split('T')[0]}
                                     required
-                                    className="mt-2 w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 outline-none transition focus:border-green-500 focus:bg-white focus:ring-4 focus:ring-green-100"
+                                    className="mt-2 w-full rounded-lg border border-slate-200 dark:border-slate-850 bg-slate-50 dark:bg-slate-950 px-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-green-500 dark:focus:border-green-400 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-green-105 dark:focus:ring-green-950/40"
                                 />
                             </label>
 
                             <div>
-                                <p className="mb-2 flex items-center gap-2 text-sm font-bold text-gray-800">
-                                    <FaUserTie className="text-green-600" />
+                                <p className="mb-2 flex items-center gap-2 text-sm font-bold text-slate-800 dark:text-slate-250">
+                                    <FaUserTie className="text-green-600 dark:text-green-455" />
                                     Driver Needed
                                 </p>
                                 <div className="grid grid-cols-2 gap-2">
@@ -271,8 +273,8 @@ const CarBookingCard = ({ car }) => {
                                         <label
                                             key={option}
                                             className={`flex cursor-pointer items-center justify-center rounded-lg border px-3 py-2.5 text-sm font-bold transition ${formData.drived_needed === option
-                                                ? 'border-green-600 bg-green-50 text-green-700 ring-4 ring-green-100'
-                                                : 'border-gray-200 bg-gray-50 text-gray-600 hover:border-green-200'
+                                                ? 'border-green-600 dark:border-green-500 bg-green-50 dark:bg-green-950/30 text-green-700 dark:text-green-400 ring-4 ring-green-100 dark:ring-green-950/40'
+                                                : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-400 hover:border-green-200 dark:hover:border-green-900/60'
                                                 }`}
                                         >
                                             <input
@@ -290,8 +292,8 @@ const CarBookingCard = ({ car }) => {
                             </div>
 
                             <label className="block sm:col-span-2">
-                                <span className="flex items-center gap-2 text-sm font-bold text-gray-800">
-                                    <FaRegStickyNote className="text-green-600" />
+                                <span className="flex items-center gap-2 text-sm font-bold text-slate-800 dark:text-slate-250">
+                                    <FaRegStickyNote className="text-green-600 dark:text-green-400" />
                                     Note
                                 </span>
                                 <textarea
@@ -300,24 +302,24 @@ const CarBookingCard = ({ car }) => {
                                     onChange={handleChange}
                                     placeholder="Write pickup time, destination, or any special request."
                                     rows={3}
-                                    className="mt-2 w-full resize-none rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 outline-none transition focus:border-green-500 focus:bg-white focus:ring-4 focus:ring-green-100"
+                                    className="mt-2 w-full resize-none rounded-lg border border-slate-200 dark:border-slate-850 bg-slate-50 dark:bg-slate-950 px-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-green-500 dark:focus:border-green-400 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-green-100 dark:focus:ring-green-950/40"
                                 />
                             </label>
                         </div>
 
-                        <div className="flex flex-col gap-3 border-t border-gray-100 bg-gray-50 p-5 sm:flex-row sm:justify-end sm:p-6">
+                        <div className="flex flex-col gap-3 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/60 p-5 sm:flex-row sm:justify-end sm:p-6">
                             <button
                                 type="button"
                                 onClick={() => setIsBookingModalOpen(false)}
                                 disabled={isSubmitting}
-                                className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-gray-200 bg-white px-5 py-3 text-sm font-bold text-gray-700 transition hover:border-gray-300 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-100 disabled:cursor-not-allowed disabled:opacity-70"
+                                className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-slate-250 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-3 text-sm font-bold text-slate-700 dark:text-slate-350 hover:border-slate-350 dark:hover:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
                             >
                                 Cancel
                             </button>
                             <button
                                 type="submit"
                                 disabled={isSubmitting}
-                                className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-green-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-green-600/20 transition hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-200 disabled:cursor-not-allowed disabled:opacity-70"
+                                className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-green-600 dark:bg-green-500 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-green-600/20 transition hover:bg-green-700 dark:hover:bg-green-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
                             >
                                 <FaCalendarCheck />
                                 {isSubmitting ? 'Booking...' : 'Book Now'}

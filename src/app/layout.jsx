@@ -4,6 +4,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Toaster } from "react-hot-toast";
 import SocialLoginToast from "@/components/SocialLoginToast";
+import { ThemeProvider } from "@/providers/ThemeProvider";
+import SmoothScroll from "@/components/SmoothScroll";
 
 const geistSans = Arimo({
   variable: "--font-arimo-sans",
@@ -31,14 +33,21 @@ export default function RootLayout({ children }) {
     <html
       lang="en"
       className={`${geistSans.className} h-full`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">
-        <Toaster position="top-right" />
-        <Navbar />
-        {children}
-        <Footer />
-        <SocialLoginToast />
+      <body className="min-h-full flex flex-col bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300">
+        <ThemeProvider>
+          <SmoothScroll />
+          <Toaster position="top-right" />
+          <Navbar />
+          <div className="flex-1">
+            {children}
+          </div>
+          <Footer />
+          <SocialLoginToast />
+        </ThemeProvider>
       </body>
     </html>
   );
 }
+

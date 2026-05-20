@@ -19,7 +19,6 @@ import {
   FaTimes,
   FaUsers,
 } from 'react-icons/fa'
-import { FaX } from 'react-icons/fa6'
 
 const carTypes = ['Sedan', 'SUV', 'Hatchback', 'Pickup', 'Minivan', 'Luxury']
 const availabilityOptions = ['Available', 'Unavailable']
@@ -257,8 +256,8 @@ const MyCarCard = ({ car }) => {
 
   return (
     <>
-      <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-2xl">
-        <div className="relative h-56 overflow-hidden bg-gray-200">
+      <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg dark:shadow-slate-950/50 transition duration-305 hover:-translate-y-1 hover:shadow-2xl hover:border-green-500/10 dark:hover:border-green-400/10">
+        <div className="relative h-56 overflow-hidden bg-slate-150 dark:bg-slate-800">
           <Image
             src={currentCar.imageURL}
             alt={currentCar.carName}
@@ -268,23 +267,23 @@ const MyCarCard = ({ car }) => {
           />
           <div className="absolute inset-0 bg-linear-to-t from-black/45 via-black/5 to-transparent" />
           <span
-            className={`absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-bold shadow-md ${isAvailable ? 'bg-green-600 text-white' : 'bg-red-100 text-red-700'
+            className={`absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-bold shadow-md ${isAvailable ? 'bg-green-600 text-white' : 'bg-red-100 dark:bg-red-950/50 text-red-700 dark:text-red-300 border border-red-200/20'
               }`}
           >
             {currentCar.availabilityStatus}
           </span>
-          <span className="absolute bottom-4 right-4 rounded-lg bg-white/95 px-3 py-1 text-sm font-extrabold text-green-800 shadow-md">
+          <span className="absolute bottom-4 right-4 rounded-lg bg-white/95 dark:bg-slate-950/95 border border-slate-100/30 dark:border-slate-800/30 px-3 py-1 text-sm font-extrabold text-green-800 dark:text-green-400 shadow-md">
             ${currentCar.dailyRentPrice} / day
           </span>
         </div>
 
         <div className="flex grow flex-col p-5">
-          <p className="mb-3 inline-flex w-fit items-center gap-2 rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">
+          <p className="mb-3 inline-flex w-fit items-center gap-2 rounded-full bg-green-50 dark:bg-green-950/40 px-3 py-1 text-xs font-bold text-green-700 dark:text-green-300">
             <FaCarSide />
             {currentCar.carType}
           </p>
 
-          <h3 className="line-clamp-1 text-xl font-extrabold text-gray-900">
+          <h3 className="line-clamp-1 text-xl font-bold text-slate-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
             {currentCar.carName}
           </h3>
 
@@ -311,7 +310,7 @@ const MyCarCard = ({ car }) => {
             />
           </div>
 
-          <p className="mt-4 line-clamp-3 text-sm leading-6 text-gray-600">
+          <p className="mt-4 line-clamp-3 text-sm leading-6 text-slate-500 dark:text-slate-400">
             {currentCar.description}
           </p>
 
@@ -320,7 +319,7 @@ const MyCarCard = ({ car }) => {
               type="button"
               onClick={handleUpdateCar}
               disabled={isDeleting}
-              className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-green-200 bg-white px-4 py-3 text-sm font-bold text-green-700 transition hover:border-green-600 hover:bg-green-50 disabled:cursor-not-allowed disabled:opacity-60"
+              className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-green-200 dark:border-green-850 bg-white dark:bg-slate-900 px-4 py-3 text-sm font-bold text-green-750 dark:text-green-400 transition hover:border-green-600 dark:hover:border-green-500 hover:bg-green-50 dark:hover:bg-green-950/30 disabled:cursor-not-allowed disabled:opacity-60"
             >
               <FaEdit />
               Update
@@ -329,19 +328,19 @@ const MyCarCard = ({ car }) => {
               type="button"
               onClick={() => setIsDeleteOpen(true)}
               disabled={isDeleting}
-              className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-red-200 bg-white px-4 py-3 text-sm font-bold text-red-600 transition hover:border-red-500 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60"
+              className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-red-200 dark:border-red-900/60 bg-white dark:bg-slate-900 px-4 py-3 text-sm font-bold text-red-600 dark:text-red-400 transition hover:border-red-500 dark:hover:border-red-450 hover:bg-red-50 dark:hover:bg-red-950/30 disabled:cursor-not-allowed disabled:opacity-60"
             >
               <FaTrash />
               {isDeleting ? 'Deleting...' : 'Delete'}
             </button>
           </div>
         </div>
-        <div className="h-1.5 bg-linear-to-r from-green-400 to-green-800" />
+        <div className="h-1.5 bg-linear-to-r from-green-500 via-emerald-400 to-green-600" />
       </article>
 
       {isUpdateOpen ? (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 py-6"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs px-4 py-6"
           role="dialog"
           aria-modal="true"
           aria-labelledby="car-update-title"
@@ -354,15 +353,15 @@ const MyCarCard = ({ car }) => {
           <form
             onSubmit={handleUpdateSubmit}
             noValidate
-            className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl bg-white shadow-2xl"
+            className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl animate-in fade-in zoom-in-95 duration-200"
           >
-            <div className="flex items-start justify-between gap-4 border-b border-gray-100 p-5 sm:p-6">
+            <div className="flex items-start justify-between gap-4 border-b border-slate-150 dark:border-slate-800 p-5 sm:p-6">
               <div>
-                <p className="mb-2 inline-flex w-fit items-center gap-2 rounded-full bg-green-50 px-3 py-1 text-xs font-bold text-green-700">
+                <p className="mb-2 inline-flex w-fit items-center gap-2 rounded-full bg-green-50 dark:bg-green-950/40 px-3 py-1 text-xs font-bold text-green-700 dark:text-green-300">
                   <FaCarSide />
                   Edit Car
                 </p>
-                <h2 id="car-update-title" className="text-2xl font-black text-gray-900">
+                <h2 id="car-update-title" className="text-2xl font-black text-slate-900 dark:text-white">
                   Update {currentCar.carName}
                 </h2>
               </div>
@@ -370,7 +369,7 @@ const MyCarCard = ({ car }) => {
                 type="button"
                 onClick={() => setIsUpdateOpen(false)}
                 disabled={isUpdating}
-                className="inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-gray-200 text-gray-500 transition hover:border-green-200 hover:bg-green-50 hover:text-green-700 focus:outline-none focus:ring-4 focus:ring-green-100 disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 text-slate-505 dark:text-slate-400 transition hover:border-green-200 dark:hover:border-green-900 hover:bg-green-50 dark:hover:bg-green-950/40 hover:text-green-700 dark:hover:text-green-400 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60"
                 aria-label="Close update modal"
               >
                 <FaTimes />
@@ -522,7 +521,7 @@ const MyCarCard = ({ car }) => {
               </div>
 
               <div className="sm:col-span-2">
-                <div className="relative h-44 overflow-hidden rounded-xl bg-green-950 text-green-100">
+                <div className="relative h-44 overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-850 text-slate-500 dark:text-slate-400">
                   {imagePreview ? (
                     <Image
                       src={imagePreview}
@@ -533,7 +532,7 @@ const MyCarCard = ({ car }) => {
                     />
                   ) : (
                     <div className="flex h-full items-center justify-center gap-3">
-                      <FaImage className="text-3xl" />
+                      <FaImage className="text-3xl text-green-600 dark:text-green-400" />
                       <span className="text-sm font-semibold">Image preview</span>
                     </div>
                   )}
@@ -541,19 +540,19 @@ const MyCarCard = ({ car }) => {
               </div>
             </div>
 
-            <div className="flex flex-col gap-3 border-t border-gray-100 bg-gray-50 p-5 sm:flex-row sm:justify-end sm:p-6">
+            <div className="flex flex-col gap-3 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/60 p-5 sm:flex-row sm:justify-end sm:p-6">
               <button
                 type="button"
                 onClick={() => setIsUpdateOpen(false)}
                 disabled={isUpdating}
-                className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-gray-200 bg-white px-5 py-3 text-sm font-bold text-gray-700 transition hover:border-gray-300 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-100 disabled:cursor-not-allowed disabled:opacity-70"
+                className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-slate-205 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-3 text-sm font-bold text-slate-700 dark:text-slate-350 hover:border-slate-350 dark:hover:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-800 focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={isUpdating}
-                className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-green-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-green-600/20 transition hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-200 disabled:cursor-not-allowed disabled:opacity-70"
+                className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-green-600 dark:bg-green-500 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-green-600/25 transition hover:bg-green-700 dark:hover:bg-green-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
               >
                 <FaCheckCircle />
                 {isUpdating ? 'Updating...' : 'Update Car'}
@@ -564,73 +563,72 @@ const MyCarCard = ({ car }) => {
       ) : null}
 
       <AlertDialog isOpen={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
-        <AlertDialog.Backdrop>
-          <AlertDialog.Container placement="center" size="md">
-            <AlertDialog.Dialog>
-              <AlertDialog.Header>
-                <AlertDialog.Icon status="danger">
-                  <FaTrash />
-                </AlertDialog.Icon>
-                <div>
-                  <AlertDialog.Heading>Delete this car?</AlertDialog.Heading>
-                  <p className="mt-1 text-sm font-medium text-gray-500">
-                    This action cannot be undone.
-                  </p>
-                </div>
-              </AlertDialog.Header>
-              <AlertDialog.Body>
-                <p className="text-sm leading-6 text-gray-600">
-                  You are about to delete{' '}
-                  <span className="font-bold text-gray-900">{currentCar.carName}</span>
-                  . It will be removed from your DriveSphere fleet.
+        <AlertDialog.Backdrop className="bg-black/60 backdrop-blur-xs" />
+        <AlertDialog.Container placement="center" size="md">
+          <AlertDialog.Dialog className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl p-6 rounded-2xl">
+            <AlertDialog.Header className="flex items-start gap-4">
+              <AlertDialog.Icon status="danger" className="bg-red-100 dark:bg-red-955/40 text-red-600 dark:text-red-405 shrink-0 rounded-full flex h-11 w-11 items-center justify-center">
+                <FaTrash />
+              </AlertDialog.Icon>
+              <div>
+                <AlertDialog.Heading className="text-xl font-black text-slate-900 dark:text-white">Delete this car?</AlertDialog.Heading>
+                <p className="mt-1 text-sm font-semibold text-slate-500 dark:text-slate-400">
+                  This action cannot be undone.
                 </p>
-              </AlertDialog.Body>
-              <AlertDialog.Footer>
-                <AlertDialog.CloseTrigger
-                  isDisabled={isDeleting}
-                  className="inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-gray-200 text-gray-500 transition hover:border-red-200 hover:bg-red-50 hover:text-red-600 focus:outline-none focus:ring-4 focus:ring-red-100"
-                  aria-label="Close delete confirmation modal"
-                >
-                  <FaTimes />
-                </AlertDialog.CloseTrigger>
-                <Button
-                  onPress={handleDeleteCar}
-                  isDisabled={isDeleting}
-                  className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-red-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-red-600/20 transition hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-200 disabled:cursor-not-allowed disabled:opacity-70"
-                >
-                  <FaTrash />
-                  {isDeleting ? 'Deleting...' : 'Delete Car'}
-                </Button>
-              </AlertDialog.Footer>
-            </AlertDialog.Dialog>
-          </AlertDialog.Container>
-        </AlertDialog.Backdrop>
+              </div>
+            </AlertDialog.Header>
+            <AlertDialog.Body className="mt-4">
+              <p className="text-sm leading-6 text-slate-600 dark:text-slate-400">
+                You are about to delete{' '}
+                <span className="font-bold text-slate-900 dark:text-white">{currentCar.carName}</span>
+                . It will be removed from your DriveSphere fleet.
+              </p>
+            </AlertDialog.Body>
+            <AlertDialog.Footer className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-end">
+              <AlertDialog.CloseTrigger
+                isDisabled={isDeleting}
+                className="inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 transition hover:border-red-200 dark:hover:border-red-900 hover:bg-red-50 dark:hover:bg-red-950/30 hover:text-red-650 dark:hover:text-red-400"
+                aria-label="Close delete confirmation modal"
+              >
+                <FaTimes />
+              </AlertDialog.CloseTrigger>
+              <Button
+                onPress={handleDeleteCar}
+                isDisabled={isDeleting}
+                className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-red-650 dark:bg-red-500 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-red-600/20 transition hover:bg-red-700 dark:hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-200 disabled:cursor-not-allowed disabled:opacity-70"
+              >
+                <FaTrash className="text-xs" />
+                {isDeleting ? 'Deleting...' : 'Delete Car'}
+              </Button>
+            </AlertDialog.Footer>
+          </AlertDialog.Dialog>
+        </AlertDialog.Container>
       </AlertDialog>
     </>
   )
 }
 
 const inputClass =
-  'mt-2 w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 outline-none transition focus:border-green-500 focus:bg-white focus:ring-4 focus:ring-green-100'
+  'mt-2 w-full rounded-lg border border-slate-200 dark:border-slate-850 bg-slate-50 dark:bg-slate-950 px-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-green-500 dark:focus:border-green-400 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-green-105 dark:focus:ring-green-950/40'
 
 const InfoTile = ({ icon, label, value }) => (
-  <div className="rounded-xl bg-gray-50 p-3">
-    <p className="flex items-center gap-2 font-semibold text-gray-900">
-      <span className="shrink-0 text-green-600">{icon}</span>
+  <div className="rounded-xl bg-slate-50 dark:bg-slate-950 p-3">
+    <p className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
+      <span className="shrink-0 text-green-600 dark:text-green-400">{icon}</span>
       <span className="min-w-0 truncate">{value}</span>
     </p>
-    <p className="mt-1 text-xs text-gray-500">{label}</p>
+    <p className="mt-1 text-xs text-slate-500 dark:text-slate-450">{label}</p>
   </div>
 )
 
 const UpdateField = ({ children, error, icon, label }) => (
   <label className="block">
-    <span className="flex items-center gap-2 text-sm font-bold text-gray-800">
-      <span className="text-green-600">{icon}</span>
+    <span className="flex items-center gap-2 text-sm font-bold text-slate-800 dark:text-slate-250">
+      <span className="text-green-600 dark:text-green-400">{icon}</span>
       {label}
     </span>
     {children}
-    {error ? <p className="mt-2 text-sm font-semibold text-red-600">{error}</p> : null}
+    {error ? <p className="mt-2 text-sm font-semibold text-red-600 dark:text-red-400">{error}</p> : null}
   </label>
 )
 

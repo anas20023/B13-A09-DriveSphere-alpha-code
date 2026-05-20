@@ -19,6 +19,7 @@ import {
   FaTimes,
   FaUserTie,
 } from 'react-icons/fa'
+import AnimateIn from './AnimateIn'
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat('en', {
@@ -37,20 +38,20 @@ const getBookingStatus = (date) => {
   if (bookingDate < today) {
     return {
       label: 'Completed',
-      className: 'bg-gray-100 text-gray-700',
+      className: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
     }
   }
 
   if (bookingDate.getTime() === today.getTime()) {
     return {
       label: 'Today',
-      className: 'bg-amber-100 text-amber-800',
+      className: 'bg-amber-100 text-amber-805 dark:bg-amber-950/40 dark:text-amber-300 border border-amber-250/20',
     }
   }
 
   return {
     label: 'Upcoming',
-    className: 'bg-green-100 text-green-800',
+    className: 'bg-green-100 text-green-800 dark:bg-green-950/40 dark:text-green-300 border border-green-250/20',
   }
 }
 
@@ -291,8 +292,8 @@ const BookingsUI = ({ bookings }) => {
   }
 
   return (
-    <main className="bg-gray-50">
-      <section className="bg-green-950 px-4 py-16 text-white sm:px-6 lg:px-8">
+    <main className="bg-slate-50 dark:bg-slate-950 transition-colors duration-300 min-h-screen">
+      <section className="bg-green-950 dark:bg-slate-900 border-b border-green-900 dark:border-slate-800 px-4 py-16 text-white sm:px-6 lg:px-8 transition-colors duration-300">
         <div className="mx-auto max-w-6xl">
           <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-green-300">
             My Bookings
@@ -301,7 +302,7 @@ const BookingsUI = ({ bookings }) => {
             <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
               Track every DriveSphere reservation
             </h1>
-            <p className="mt-5 text-base leading-7 text-gray-300 sm:text-lg">
+            <p className="mt-5 text-base leading-7 text-green-100/70 dark:text-slate-350 sm:text-lg">
               Review booked cars, rental dates, driver requests, and notes from
               your reservation history.
             </p>
@@ -311,34 +312,36 @@ const BookingsUI = ({ bookings }) => {
 
       <section className="px-4 py-14 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-6xl">
-          <div className="mb-8 grid gap-4 sm:grid-cols-3">
-            <SummaryCard
-              icon={<FaClipboardList />}
-              label="Total Bookings"
-              value={bookingList.length}
-            />
-            <SummaryCard
-              icon={<FaDollarSign />}
-              label="Daily Rent Total"
-              value={`$${totalCost}`}
-            />
-            <SummaryCard
-              icon={<FaUserTie />}
-              label="Driver Requests"
-              value={driverRequests}
-            />
-          </div>
+          <AnimateIn variant="slideUp">
+            <div className="mb-10 grid gap-5 sm:grid-cols-3">
+              <SummaryCard
+                icon={<FaClipboardList />}
+                label="Total Bookings"
+                value={bookingList.length}
+              />
+              <SummaryCard
+                icon={<FaDollarSign />}
+                label="Daily Rent Total"
+                value={`$${totalCost}`}
+              />
+              <SummaryCard
+                icon={<FaUserTie />}
+                label="Driver Requests"
+                value={driverRequests}
+              />
+            </div>
+          </AnimateIn>
 
           <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <h2 className="text-3xl font-extrabold text-gray-900">
+              <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white">
                 Reserved Cars
               </h2>
-              <div className="mt-3 h-1 w-20 rounded-full bg-green-600" />
+              <div className="mt-3 h-1 w-20 rounded-full bg-green-600 dark:bg-green-500" />
             </div>
             <Link
               href="/cars"
-              className="inline-flex w-fit items-center justify-center gap-2 rounded-xl bg-green-600 px-5 py-3 text-sm font-bold text-white shadow-md shadow-green-600/20 transition hover:bg-green-700"
+              className="inline-flex w-fit items-center justify-center gap-2 rounded-xl bg-green-600 hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-750 px-5 py-3 text-sm font-bold text-white shadow-md shadow-green-600/10 hover:shadow-lg transition-all duration-350 cursor-pointer"
             >
               <FaCarSide />
               Browse Cars
@@ -346,105 +349,110 @@ const BookingsUI = ({ bookings }) => {
           </div>
 
           {bookingList.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-green-200 bg-white px-6 py-14 text-center shadow-sm">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-green-50 text-2xl text-green-700">
-                <FaCalendarAlt />
+            <AnimateIn variant="scaleIn">
+              <div className="rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-14 text-center shadow-sm">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-green-50 dark:bg-green-950/40 text-2xl text-green-700 dark:text-green-350">
+                  <FaCalendarAlt />
+                </div>
+                <h3 className="mt-5 text-xl font-bold text-slate-900 dark:text-white">
+                  No bookings yet
+                </h3>
+                <p className="mx-auto mt-2 max-w-md text-slate-500 dark:text-slate-400">
+                  Choose a car from the fleet and your reservation details will
+                  appear here.
+                </p>
               </div>
-              <h3 className="mt-5 text-xl font-bold text-gray-900">
-                No bookings yet
-              </h3>
-              <p className="mx-auto mt-2 max-w-md text-gray-500">
-                Choose a car from the fleet and your reservation details will
-                appear here.
-              </p>
-            </div>
+            </AnimateIn>
           ) : (
             <div className="grid grid-cols-1 gap-7 lg:grid-cols-2">
-              {bookingList.map((booking) => {
+              {bookingList.map((booking, index) => {
                 const status = getBookingStatus(booking.booking_date)
 
                 return (
-                  <article
-                    key={booking._id}
-                    className="group overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-2xl"
-                  >
-                    <div className="grid min-h-full grid-cols-1 md:grid-cols-[220px_1fr]">
-                      <div className="relative min-h-56 overflow-hidden bg-gray-200 md:min-h-full">
-                        <Image
-                          src={booking.imageURL}
-                          alt={booking.carName}
-                          fill
-                          className="object-cover transition duration-500 group-hover:scale-105"
-                          sizes="(max-width: 768px) 100vw, 220px"
-                        />
-                        <div className="absolute inset-0 bg-linear-to-t from-black/50 via-black/5 to-transparent" />
-                        <span
-                          className={`absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-bold shadow-md ${status.className}`}
-                        >
-                          {status.label}
-                        </span>
-                        <span className="absolute bottom-4 right-4 rounded-lg bg-white/95 px-3 py-1 text-sm font-extrabold text-green-800 shadow-md">
-                          ${booking.dailyRentPrice} / day
-                        </span>
-                      </div>
-
-                      <div className="flex flex-col p-5">
-                        <p className="mb-3 inline-flex w-fit items-center gap-2 rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">
-                          <FaCarSide />
-                          {booking.carType}
-                        </p>
-
-                        <h3 className="line-clamp-2 text-2xl font-black text-gray-900">
-                          {booking.carName}
-                        </h3>
-
-                        <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
-                          <InfoTile
-                            icon={<FaCalendarAlt />}
-                            label="Booking Date"
-                            value={formatDate(booking.booking_date)}
+                  <AnimateIn key={booking._id} variant="slideUp" delay={index * 0.05}>
+                    <article
+                      className="group overflow-hidden rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-md dark:shadow-slate-950/50 transition duration-300 hover:-translate-y-1 hover:shadow-2xl flex flex-col h-full hover:border-green-500/10 dark:hover:border-green-400/10"
+                    >
+                      <div className="grid min-h-full grid-cols-1 md:grid-cols-[220px_1fr] grow">
+                        <div className="relative min-h-56 overflow-hidden bg-slate-150 dark:bg-slate-800 md:min-h-full">
+                          <Image
+                            src={booking.imageURL}
+                            alt={booking.carName}
+                            fill
+                            className="object-cover transition duration-500 group-hover:scale-105"
+                            sizes="(max-width: 768px) 100vw, 220px"
                           />
-                          <InfoTile
-                            icon={<FaUserTie />}
-                            label="Driver Needed"
-                            value={booking.drived_needed}
-                          />
+                          <div className="absolute inset-0 bg-linear-to-t from-black/50 via-black/5 to-transparent" />
+                          <span
+                            className={`absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-bold shadow-md ${status.className}`}
+                          >
+                            {status.label}
+                          </span>
+                          <span className="absolute bottom-4 right-4 rounded-lg bg-white/95 dark:bg-slate-950/95 border border-slate-100/30 dark:border-slate-800/30 px-3 py-1 text-sm font-extrabold text-green-800 dark:text-green-400 shadow-md">
+                            ${booking.dailyRentPrice} / day
+                          </span>
                         </div>
 
-                        <div className="mt-4 rounded-xl border border-gray-100 bg-gray-50 p-4">
-                          <p className="mb-2 flex items-center gap-2 text-sm font-bold text-gray-900">
-                            <FaRegStickyNote className="text-green-600" />
-                            Booking Note
-                          </p>
-                          <p className="line-clamp-3 text-sm leading-6 text-gray-600">
-                            {booking.note || 'No note added for this booking.'}
-                          </p>
-                        </div>
+                        <div className="flex flex-col p-5 justify-between">
+                          <div>
+                            <p className="mb-3 inline-flex w-fit items-center gap-2 rounded-full bg-green-50 dark:bg-green-950/40 px-3 py-1 text-xs font-bold text-green-700 dark:text-green-300">
+                              <FaCarSide />
+                              {booking.carType}
+                            </p>
 
-                        <div className="mt-5 grid grid-cols-2 gap-3">
-                          <button
-                            type="button"
-                            onClick={() => handleUpdateBooking(booking)}
-                            disabled={deletingId === booking._id}
-                            className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-green-200 bg-white px-4 py-3 text-sm font-bold text-green-700 transition hover:border-green-600 hover:bg-green-50 disabled:cursor-not-allowed disabled:opacity-60"
-                          >
-                            <FaPen />
-                            Update
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => handleDeleteBooking(booking)}
-                            disabled={deletingId === booking._id}
-                            className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-red-200 bg-white px-4 py-3 text-sm font-bold text-red-600 transition hover:border-red-500 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60"
-                          >
-                            <FaTrash />
-                            {deletingId === booking._id ? 'Deleting...' : 'Delete'}
-                          </button>
+                            <h3 className="line-clamp-2 text-2xl font-black text-slate-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
+                              {booking.carName}
+                            </h3>
+
+                            <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
+                              <InfoTile
+                                icon={<FaCalendarAlt />}
+                                label="Booking Date"
+                                value={formatDate(booking.booking_date)}
+                              />
+                              <InfoTile
+                                icon={<FaUserTie />}
+                                label="Driver Needed"
+                                value={booking.drived_needed}
+                              />
+                            </div>
+
+                            <div className="mt-4 rounded-xl border border-slate-100 dark:border-slate-800/50 bg-slate-50 dark:bg-slate-950 p-4">
+                              <p className="mb-2 flex items-center gap-2 text-sm font-bold text-slate-850 dark:text-slate-205">
+                                <FaRegStickyNote className="text-green-600 dark:text-green-450" />
+                                Booking Note
+                              </p>
+                              <p className="line-clamp-3 text-sm leading-6 text-slate-600 dark:text-slate-400">
+                                {booking.note || 'No note added for this booking.'}
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="mt-5 grid grid-cols-2 gap-3">
+                            <button
+                              type="button"
+                              onClick={() => handleUpdateBooking(booking)}
+                              disabled={deletingId === booking._id}
+                              className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-green-200 dark:border-green-800/60 bg-white dark:bg-slate-900 px-4 py-3 text-sm font-bold text-green-750 dark:text-green-400 transition hover:border-green-600 dark:hover:border-green-500 hover:bg-green-50 dark:hover:bg-green-950/20 disabled:cursor-not-allowed disabled:opacity-60"
+                            >
+                              <FaPen className="text-xs" />
+                              Update
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteBooking(booking)}
+                              disabled={deletingId === booking._id}
+                              className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-red-200 dark:border-red-900/60 bg-white dark:bg-slate-900 px-4 py-3 text-sm font-bold text-red-600 dark:text-red-400 transition hover:border-red-500 dark:hover:border-red-450 hover:bg-red-50 dark:hover:bg-red-950/20 disabled:cursor-not-allowed disabled:opacity-60"
+                            >
+                              <FaTrash className="text-xs" />
+                              {deletingId === booking._id ? 'Deleting...' : 'Delete'}
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="h-1.5 bg-linear-to-r from-green-400 to-green-800" />
-                  </article>
+                      <div className="h-1.5 bg-linear-to-r from-green-500 via-emerald-400 to-green-600" />
+                    </article>
+                  </AnimateIn>
                 )
               })}
             </div>
@@ -455,7 +463,7 @@ const BookingsUI = ({ bookings }) => {
       {/* Update Modal */}
       {isUpdateOpen && selectedBooking ? (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 py-6"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs px-4 py-6"
           role="dialog"
           aria-modal="true"
           aria-labelledby="booking-update-title"
@@ -468,18 +476,18 @@ const BookingsUI = ({ bookings }) => {
           <form
             onSubmit={handleUpdateSubmit}
             noValidate
-            className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white shadow-2xl"
+            className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl animate-in fade-in zoom-in-95 duration-200"
           >
-            <div className="flex items-start justify-between gap-4 border-b border-gray-100 p-5 sm:p-6">
+            <div className="flex items-start justify-between gap-4 border-b border-slate-100 dark:border-slate-800 p-5 sm:p-6">
               <div>
-                <p className="mb-2 inline-flex w-fit items-center gap-2 rounded-full bg-green-50 px-3 py-1 text-xs font-bold text-green-700">
+                <p className="mb-2 inline-flex w-fit items-center gap-2 rounded-full bg-green-50 dark:bg-green-950/40 px-3 py-1 text-xs font-bold text-green-700 dark:text-green-300">
                   <FaCarSide />
                   {selectedBooking.carType}
                 </p>
-                <h2 id="booking-update-title" className="text-2xl font-black text-gray-900">
+                <h2 id="booking-update-title" className="text-2xl font-black text-slate-900 dark:text-white">
                   Update {selectedBooking.carName}
                 </h2>
-                <p className="mt-1 text-sm font-medium text-gray-500">
+                <p className="mt-1 text-sm font-bold text-green-600 dark:text-green-400">
                   ${selectedBooking.dailyRentPrice} per day
                 </p>
               </div>
@@ -487,7 +495,7 @@ const BookingsUI = ({ bookings }) => {
                 type="button"
                 onClick={() => setIsUpdateOpen(false)}
                 disabled={isUpdating}
-                className="inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-gray-200 text-gray-500 transition hover:border-green-200 hover:bg-green-50 hover:text-green-700 focus:outline-none focus:ring-4 focus:ring-green-100 disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 transition hover:border-green-200 dark:hover:border-green-900 hover:bg-green-50 dark:hover:bg-green-950/30 hover:text-green-750 dark:hover:text-green-400 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60"
                 aria-label="Close booking update modal"
               >
                 <FaTimes />
@@ -512,8 +520,8 @@ const BookingsUI = ({ bookings }) => {
               </BookingField>
 
               <div>
-                <p className="mb-2 flex items-center gap-2 text-sm font-bold text-gray-800">
-                  <FaUserTie className="text-green-600" />
+                <p className="mb-2 flex items-center gap-2 text-sm font-bold text-slate-800 dark:text-slate-250">
+                  <FaUserTie className="text-green-600 dark:text-green-455" />
                   Driver Needed
                 </p>
                 <div className="grid grid-cols-2 gap-2">
@@ -521,8 +529,8 @@ const BookingsUI = ({ bookings }) => {
                     <label
                       key={option}
                       className={`flex cursor-pointer items-center justify-center rounded-lg border px-3 py-2.5 text-sm font-bold transition ${formData.drived_needed === option
-                          ? 'border-green-600 bg-green-50 text-green-700 ring-4 ring-green-100'
-                          : 'border-gray-200 bg-gray-50 text-gray-600 hover:border-green-200'
+                          ? 'border-green-600 dark:border-green-500 bg-green-50 dark:bg-green-950/30 text-green-750 dark:text-green-400 ring-4 ring-green-100 dark:ring-green-950/40'
+                          : 'border-slate-200 dark:border-slate-800 bg-slate-55 dark:bg-slate-950 text-slate-600 dark:text-slate-400 hover:border-green-200 dark:hover:border-green-800/60'
                         }`}
                     >
                       <input
@@ -538,7 +546,7 @@ const BookingsUI = ({ bookings }) => {
                   ))}
                 </div>
                 {errors.drived_needed ? (
-                  <p className="mt-2 text-sm font-semibold text-red-600">
+                  <p className="mt-2 text-sm font-semibold text-red-650 dark:text-red-400">
                     {errors.drived_needed}
                   </p>
                 ) : null}
@@ -562,19 +570,19 @@ const BookingsUI = ({ bookings }) => {
               </div>
             </div>
 
-            <div className="flex flex-col gap-3 border-t border-gray-100 bg-gray-50 p-5 sm:flex-row sm:justify-end sm:p-6">
+            <div className="flex flex-col gap-3 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/60 p-5 sm:flex-row sm:justify-end sm:p-6">
               <button
                 type="button"
                 onClick={() => setIsUpdateOpen(false)}
                 disabled={isUpdating}
-                className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-gray-200 bg-white px-5 py-3 text-sm font-bold text-gray-700 transition hover:border-gray-300 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-100 disabled:cursor-not-allowed disabled:opacity-70"
+                className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-3 text-sm font-bold text-slate-700 dark:text-slate-350 hover:border-slate-350 dark:hover:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-800 focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={isUpdating}
-                className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-green-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-green-600/20 transition hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-200 disabled:cursor-not-allowed disabled:opacity-70"
+                className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-green-600 dark:bg-green-500 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-green-600/25 transition hover:bg-green-700 dark:hover:bg-green-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
               >
                 <FaCheckCircle />
                 {isUpdating ? 'Updating...' : 'Update Booking'}
@@ -587,7 +595,7 @@ const BookingsUI = ({ bookings }) => {
       {/* Delete Confirmation Modal */}
       {isDeleteOpen && bookingToDelete ? (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 py-6"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs px-4 py-6"
           role="dialog"
           aria-modal="true"
           aria-labelledby="booking-delete-title"
@@ -597,15 +605,15 @@ const BookingsUI = ({ bookings }) => {
             }
           }}
         >
-          <div className="w-full max-w-md rounded-2xl bg-white shadow-2xl">
+          <div className="w-full max-w-md rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
             <div className="flex items-start justify-between gap-4 p-5 sm:p-6">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-red-100 text-lg text-red-600">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-red-100 dark:bg-red-950/40 text-lg text-red-600 dark:text-red-400">
                 <FaExclamationTriangle />
               </div>
               <button
                 type="button"
                 onClick={() => setIsDeleteOpen(false)}
-                className="inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-gray-200 text-gray-500 transition hover:border-red-200 hover:bg-red-50 hover:text-red-600 focus:outline-none focus:ring-4 focus:ring-red-100"
+                className="inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 transition hover:border-red-200 dark:hover:border-red-900 hover:bg-red-50 dark:hover:bg-red-950/30 hover:text-red-600 focus:outline-none"
                 aria-label="Close delete confirmation modal"
               >
                 <FaTimes />
@@ -613,23 +621,30 @@ const BookingsUI = ({ bookings }) => {
             </div>
 
             <div className="px-5 pb-2 sm:px-6">
-              <h2 id="booking-delete-title" className="text-xl font-black text-gray-900">
+              <h2 id="booking-delete-title" className="text-xl font-black text-slate-900 dark:text-white">
                 Delete this booking?
               </h2>
-              <p className="mt-2 text-sm leading-6 text-gray-500">
+              <p className="mt-2 text-sm leading-6 text-slate-500 dark:text-slate-400">
                 You&apos;re about to delete your reservation for{' '}
-                <span className="font-bold text-gray-800">{bookingToDelete.carName}</span>.
+                <span className="font-bold text-slate-800 dark:text-slate-200">{bookingToDelete.carName}</span>.
                 This action cannot be undone.
               </p>
             </div>
 
-            <div className="mt-6 flex flex-col gap-3 border-t border-gray-100 bg-gray-50 p-5 sm:flex-row sm:justify-end sm:p-6">
+            <div className="mt-6 flex flex-col gap-3 border-t border-slate-100 dark:border-slate-800 bg-slate-55 dark:bg-slate-950/60 p-5 sm:flex-row sm:justify-end sm:p-6">
+              <button
+                type="button"
+                onClick={() => setIsDeleteOpen(false)}
+                className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-3 text-sm font-bold text-slate-700 dark:text-slate-350 hover:bg-gray-105 dark:hover:bg-slate-800"
+              >
+                Cancel
+              </button>
               <button
                 type="button"
                 onClick={handleConfirmDelete}
-                className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-red-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-red-600/20 transition hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-200"
+                className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-red-600 dark:bg-red-500 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-red-600/20 hover:bg-red-700 dark:hover:bg-red-600"
               >
-                <FaTrash />
+                <FaTrash className="text-xs" />
                 Yes, Delete
               </button>
             </div>
@@ -641,40 +656,40 @@ const BookingsUI = ({ bookings }) => {
 }
 
 const inputClass =
-  'mt-2 w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-sm text-gray-900 outline-none transition focus:border-green-500 focus:bg-white focus:ring-4 focus:ring-green-100'
+  'mt-2 w-full rounded-lg border border-slate-200 dark:border-slate-850 bg-slate-50 dark:bg-slate-950 px-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-green-500 dark:focus:border-green-400 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-green-105 dark:focus:ring-green-950/40'
 
 const SummaryCard = ({ icon, label, value }) => (
-  <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+  <div className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-md dark:shadow-slate-950/30">
     <div className="flex items-center gap-4">
-      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-green-100 text-xl text-green-700">
+      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-green-50 dark:bg-green-950/40 text-xl text-green-700 dark:text-green-300">
         {icon}
       </span>
       <div className="min-w-0">
-        <p className="text-sm font-semibold text-gray-500">{label}</p>
-        <p className="mt-1 text-2xl font-black text-gray-900">{value}</p>
+        <p className="text-sm font-bold text-slate-500 dark:text-slate-400">{label}</p>
+        <p className="mt-1 text-2xl font-black text-slate-900 dark:text-white">{value}</p>
       </div>
     </div>
   </div>
 )
 
 const InfoTile = ({ icon, label, value }) => (
-  <div className="rounded-xl bg-gray-50 p-3">
-    <p className="flex items-center gap-2 font-semibold text-gray-900">
-      <span className="text-green-600">{icon}</span>
+  <div className="rounded-xl bg-slate-50 dark:bg-slate-950 p-3">
+    <p className="flex items-center gap-2 font-bold text-slate-850 dark:text-slate-200">
+      <span className="text-green-600 dark:text-green-400">{icon}</span>
       <span className="line-clamp-1">{value}</span>
     </p>
-    <p className="mt-1 text-xs text-gray-500">{label}</p>
+    <p className="mt-1 text-xs text-slate-500 dark:text-slate-450">{label}</p>
   </div>
 )
 
 const BookingField = ({ children, error, icon, label }) => (
   <label className="block">
-    <span className="flex items-center gap-2 text-sm font-bold text-gray-800">
-      <span className="text-green-600">{icon}</span>
+    <span className="flex items-center gap-2 text-sm font-bold text-slate-800 dark:text-slate-250">
+      <span className="text-green-600 dark:text-green-400">{icon}</span>
       {label}
     </span>
     {children}
-    {error ? <p className="mt-2 text-sm font-semibold text-red-600">{error}</p> : null}
+    {error ? <p className="mt-2 text-sm font-semibold text-red-650 dark:text-red-400">{error}</p> : null}
   </label>
 )
 
