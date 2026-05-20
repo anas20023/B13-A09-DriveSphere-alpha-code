@@ -10,9 +10,29 @@ import { authClient } from "@/lib/auth-client";
 const RegisterPage = () => {
     const router = useRouter();
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [passwordError, setPasswordError] = useState("");
+
+    const validatePassword = (password) => {
+        const errors = [];
+
+        if (password.length < 6) {
+            errors.push("Password must be at least 6 characters.");
+        }
+
+        if (!/[A-Z]/.test(password)) {
+            errors.push("Password must contain at least one uppercase letter.");
+        }
+
+        if (!/[a-z]/.test(password)) {
+            errors.push("Password must contain at least one lowercase letter.");
+        }
+
+        return errors.join(" ");
+    };
 
     const handleRegister = async (e) => {
         e.preventDefault();
+        setPasswordError("");
 
         const formData = new FormData(e.currentTarget);
 
@@ -22,6 +42,9 @@ const RegisterPage = () => {
         const password = formData.get("password")?.toString() || "";
 
         if (!name || !email || !password) {
+            if (!password) {
+                setPasswordError("Password is required.");
+            }
             toast.error("Please fill in all required fields.");
             return;
         }
@@ -43,20 +66,10 @@ const RegisterPage = () => {
             return;
         }
 
-        if (password.length < 8) {
-            toast.error("Password must be at least 8 characters.");
-            return;
-        }
-
-        if (!/[A-Z]/.test(password)) {
-            toast.error(
-                "Password must contain at least one uppercase letter."
-            );
-            return;
-        }
-
-        if (!/[0-9]/.test(password)) {
-            toast.error("Password must contain at least one number.");
+        const nextPasswordError = validatePassword(password);
+        if (nextPasswordError) {
+            setPasswordError(nextPasswordError);
+            toast.error("Please fix the password field.");
             return;
         }
 
@@ -177,9 +190,20 @@ const RegisterPage = () => {
                         <input
                             type="password"
                             name="password"
+                            onChange={() => setPasswordError("")}
+                            aria-invalid={passwordError ? "true" : "false"}
+                            aria-describedby={passwordError ? "password-error" : undefined}
                             placeholder="••••••••"
                             className="w-full rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-white placeholder:text-gray-400 outline-none transition duration-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
                         />
+                        {passwordError ? (
+                            <p
+                                id="password-error"
+                                className="mt-2 text-sm font-medium text-red-300"
+                            >
+                                {passwordError}
+                            </p>
+                        ) : null}
                     </div>
 
                     {/* Register Button */}
