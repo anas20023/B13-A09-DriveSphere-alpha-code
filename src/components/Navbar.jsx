@@ -26,7 +26,7 @@ export default function Navbar() {
         { href: '/profile', label: 'Profile' },
         { href: '/cars/add', label: 'Add Car' },
         { href: '/bookings', label: 'My Bookings' },
-        { href: '/cars/my-added-cars', label: 'My Added Cars' },
+        { href: '/cars/mycars', label: 'My Cars' },
     ]
     const [isOpen, setIsOpen] = useState(false)
     const [isAvatarOpen, setIsAvatarOpen] = useState(false)

@@ -52,3 +52,22 @@ export const getBookings = async () => {
         return []
     }
 }
+export const getCarsByUser = async () => {
+    const { token } = await auth.api.getToken({
+        headers: await headers()
+    })
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/my-cars`, {
+            headers: {
+                'authorization': `Bearer ${token}`
+            }
+        })
+        if (!res.ok) {
+            throw new Error('Failed to fetch cars');
+        }
+        return res.json()
+    } catch (error) {
+        console.log(error.message)
+        return []
+    }
+}
