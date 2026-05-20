@@ -38,6 +38,7 @@ export default function Navbar() {
     const [isMobileAvatarOpen, setIsMobileAvatarOpen] = useState(false)
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setMounted(true)
         const handleClickOutside = (event) => {
             if (desktopDropdownRef.current && !desktopDropdownRef.current.contains(event.target)) {
@@ -71,7 +72,7 @@ export default function Navbar() {
                     href="/"
                     className="flex items-center gap-2 text-xl font-extrabold tracking-tight"
                 >
-                    <Image src={"https://i.ibb.co.com/sJPHjJW9/Chat-GPT-Image-May-18-2026-01-33-08-AM.png"} width={40} height={40} alt='Navbar Image' className="rounded-lg shadow-sm animate-pulse" />
+                    <Image src={"https://i.ibb.co.com/sJPHjJW9/Chat-GPT-Image-May-18-2026-01-33-08-AM.png"} width={40} height={40} alt='Navbar Image' />
                     <span className="text-green-600 dark:text-green-400">Drive</span>
                     <span className="text-slate-800 dark:text-slate-100">Sphere</span>
                 </Link>
