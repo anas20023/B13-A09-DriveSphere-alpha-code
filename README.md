@@ -23,11 +23,11 @@ Client Side Live Link: https://drivesphare.vercel.app/
 ## 🛠️ Technologies Used
 
 - Next.js
-- React
+- Hero UI
 - Tailwind CSS
 - MongoDB
 - Express.js
-- Firebase Authentication
+- Better Auth 
 
 ---
 
