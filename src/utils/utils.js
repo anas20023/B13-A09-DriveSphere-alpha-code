@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 
 export const getCars = async () => {
     try {
-        const res = await fetch(`${process.env.BACKEND_URL}/cars`)
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cars`)
         if (!res.ok) {
             throw new Error('Failed to fetch cars');
         }
@@ -19,7 +19,7 @@ export const getCarsByID = async (id) => {
     })
     // console.log(token)
     try {
-        const res = await fetch(`${process.env.BACKEND_URL}/cars/${id}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cars/${id}`, {
             headers: {
                 'authorization': `Bearer ${token}`
             }
