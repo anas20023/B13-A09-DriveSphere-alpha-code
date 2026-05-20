@@ -14,7 +14,7 @@ export const getCars = async () => {
     }
 }
 export const getCarsByID = async (id) => {
-    const {token} = await auth.api.getToken({
+    const { token } = await auth.api.getToken({
         headers: await headers()
     })
     // console.log(token)
@@ -31,5 +31,24 @@ export const getCarsByID = async (id) => {
     } catch (error) {
         console.log(error.message)
         return {}
+    }
+}
+export const getBookings = async () => {
+    const { token } = await auth.api.getToken({
+        headers: await headers()
+    })
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/bookings`, {
+            headers: {
+                'authorization': `Bearer ${token}`
+            }
+        })
+        if (!res.ok) {
+            throw new Error('Failed to fetch cars');
+        }
+        return res.json()
+    } catch (error) {
+        console.log(error.message)
+        return []
     }
 }

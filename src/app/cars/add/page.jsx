@@ -35,7 +35,7 @@ const AddCar = () => {
   const router = useRouter()
   const { data: session } = authClient.useSession()
   const user=session?.user
-  // console.log(user)
+  // console.log(session)
   const [formData, setFormData] = useState(initialFormData)
   const [errors, setErrors] = useState({})
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -126,7 +126,8 @@ const AddCar = () => {
       toast.error('Please fix the highlighted fields.')
       return
     }
-
+    const token = await authClient.getToken()
+    // console.log(token)
     setIsSubmitting(true)
 
     const newCar = {
@@ -146,6 +147,7 @@ const AddCar = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'authorization':`Bearer ${token}`
         },
         body: JSON.stringify(newCar)
       })
