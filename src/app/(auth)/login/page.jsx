@@ -37,17 +37,12 @@ const LoginPage = () => {
             });
 
             if (error) {
-                throw new Error(
-                    data.message || "Login failed."
-                );
+                throw new Error("Login failed.");
             }
             toast.success("Login successful!");
             router.push("/");
         } catch (err) {
-            toast.error(
-                err.message ||
-                "Invalid email or password."
-            );
+            toast.error("Invalid email or password.");
         } finally {
             setIsSubmitting(false);
         }

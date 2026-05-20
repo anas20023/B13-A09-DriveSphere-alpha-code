@@ -18,7 +18,7 @@ export default function Navbar() {
     const user = session?.user
     const desktopDropdownRef = useRef(null)
     const mobileDropdownRef = useRef(null)
-    
+
     const [mounted, setMounted] = useState(false)
     const { theme, setTheme } = useTheme()
 
@@ -114,7 +114,10 @@ export default function Navbar() {
                                     aria-haspopup="menu"
                                     aria-expanded={isAvatarOpen}
                                 >
-                                    <Avatar src={user.image} className="w-9 h-9 border border-slate-200 dark:border-slate-800" />
+                                    <Avatar>
+                                        <Avatar.Image alt={user.name} src={user.image} />
+                                        <Avatar.Fallback>{user.name.toLocaleUpperCase().slice(0,2)}</Avatar.Fallback>
+                                    </Avatar>
                                 </button>
                                 {isAvatarOpen && (
                                     <div className="absolute right-0 top-12 z-50 w-56 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-xl animate-in fade-in slide-in-from-top-2 duration-250">
