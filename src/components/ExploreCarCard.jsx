@@ -14,7 +14,15 @@ const ExploreCarCard = ({ cars }) => {
     const currentSearch = searchParams.get('search') || ''
 
     // ✅ Derive unique types from actual data
-    const carTypes = [...new Set(cars.map((car) => car.carType).filter(Boolean))].sort()
+    const carTypes = [
+        'Luxury SUV',
+        'Sedan',
+        'SUV',
+        'Sports',
+        'Luxury Sedan',
+        'Hatchback',
+        'Luxury'
+    ]
 
     const handleFilter = (value) => {
         const params = new URLSearchParams(searchParams.toString())
