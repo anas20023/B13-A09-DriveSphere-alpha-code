@@ -1,13 +1,27 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 
-export const getCars = async () => {
+export const getCars = async (search = '', type = '') => {
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cars`)
+
+        const query = new URLSearchParams()
+        if (search) {
+            query.append('search', search)
+        }
+        if (type) {
+            query.append('type', type)
+        }
+        const res = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/cars?${query.toString()}`,
+            {
+                cache: 'no-store'
+            }
+        )
         if (!res.ok) {
-            throw new Error('Failed to fetch cars');
+            throw new Error('Failed to fetch cars')
         }
         return res.json()
+
     } catch (error) {
         console.log(error.message)
         return []

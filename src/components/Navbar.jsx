@@ -91,11 +91,11 @@ export default function Navbar() {
                 {/* Theme Switcher & Desktop auth – right */}
                 <div className="hidden md:flex items-center gap-4">
                     {mounted && (
-                        <button
-                            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                            className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all duration-200 cursor-pointer"
-                            aria-label="Toggle theme"
-                        >
+                         <button
+                             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                             className="p-2 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 focus-visible:ring-2 ring-green-500"
+                             aria-label="Toggle theme"
+                         >
                             {theme === 'dark' ? (
                                 <Sun className="w-4 h-4 text-amber-500 animate-spin-slow" />
                             ) : (
@@ -170,7 +170,7 @@ export default function Navbar() {
                     {mounted && (
                         <button
                             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                            className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-900 transition-all duration-200 cursor-pointer"
+                            className="p-2 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 focus-visible:ring-2 ring-green-500"
                             aria-label="Toggle theme"
                         >
                             {theme === 'dark' ? (
