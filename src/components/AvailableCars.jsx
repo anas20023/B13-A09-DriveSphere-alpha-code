@@ -6,7 +6,7 @@ const AvailableCars = async () => {
     const allCars = await getCars();
     const availableCars = allCars.filter(
         (car) => car.dailyRentPrice > 200
-    );
+    ).slice(0,6);
 
     if (availableCars.length === 0) {
         return (
