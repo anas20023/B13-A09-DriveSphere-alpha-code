@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
-import { AlertDialog, Button } from '@heroui/react'
+// removed AlertDialog, Button as they are not used
 import { authClient } from '@/lib/auth-client'
 import {
   FaCalendarCheck,
@@ -384,7 +384,7 @@ const MyCarCard = ({ car }) => {
                   value={formData.carName}
                   onChange={handleChange}
                   required
-                  className={inputClass}
+                  className={getInputClass('carName')}
                 />
               </UpdateField>
 
@@ -401,7 +401,7 @@ const MyCarCard = ({ car }) => {
                   min="1"
                   step="1"
                   required
-                  className={inputClass}
+                  className={getInputClass('dailyRentPrice')}
                 />
               </UpdateField>
 
@@ -411,7 +411,7 @@ const MyCarCard = ({ car }) => {
                   value={formData.carType}
                   onChange={handleChange}
                   required
-                  className={`${inputClass} cursor-pointer`}
+                  className={`${getInputClass('carType')} cursor-pointer`}
                 >
                   <option value="">Select car type</option>
                   {carTypes.map((type) => (
@@ -435,7 +435,7 @@ const MyCarCard = ({ car }) => {
                   min="1"
                   step="1"
                   required
-                  className={inputClass}
+                  className={getInputClass('seatCapacity')}
                 />
               </UpdateField>
 
@@ -450,7 +450,7 @@ const MyCarCard = ({ car }) => {
                   value={formData.pickupLocation}
                   onChange={handleChange}
                   required
-                  className={inputClass}
+                  className={getInputClass('pickupLocation')}
                 />
               </UpdateField>
 
@@ -464,7 +464,7 @@ const MyCarCard = ({ car }) => {
                   value={formData.availabilityStatus}
                   onChange={handleChange}
                   required
-                  className={`${inputClass} cursor-pointer`}
+                  className={`${getInputClass('availabilityStatus')} cursor-pointer`}
                 >
                   <option value="">Select status</option>
                   {availabilityOptions.map((status) => (
@@ -488,7 +488,7 @@ const MyCarCard = ({ car }) => {
                   min="0"
                   step="1"
                   required
-                  className={inputClass}
+                  className={getInputClass('booked')}
                 />
               </UpdateField>
 
@@ -499,7 +499,7 @@ const MyCarCard = ({ car }) => {
                   value={formData.imageURL}
                   onChange={handleChange}
                   required
-                  className={inputClass}
+                  className={getInputClass('imageURL')}
                 />
               </UpdateField>
 
@@ -515,7 +515,7 @@ const MyCarCard = ({ car }) => {
                     onChange={handleChange}
                     rows={4}
                     required
-                    className={`${inputClass} resize-none leading-7`}
+                    className={`${getInputClass('description')} resize-none leading-7`}
                   />
                 </UpdateField>
               </div>
@@ -562,54 +562,67 @@ const MyCarCard = ({ car }) => {
         </div>
       ) : null}
 
-      <AlertDialog isOpen={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
-        <AlertDialog.Backdrop className="bg-black/60 backdrop-blur-xs" />
-        <AlertDialog.Container placement="center" size="md">
-          <AlertDialog.Dialog className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl p-6 rounded-2xl">
-            <AlertDialog.Header className="flex items-start gap-4">
-              <AlertDialog.Icon status="danger" className="bg-red-100 dark:bg-red-955/40 text-red-600 dark:text-red-405 shrink-0 rounded-full flex h-11 w-11 items-center justify-center">
-                <FaTrash />
-              </AlertDialog.Icon>
+      {isDeleteOpen ? (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs px-4 py-6"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="car-delete-title"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              setIsDeleteOpen(false)
+            }
+          }}
+        >
+          <div className="w-full max-w-md rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl animate-in fade-in zoom-in-95 duration-200 p-6">
+            <div className="flex items-start gap-4">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-red-100 dark:bg-red-950/40">
+                <FaTrash className="text-red-600 dark:text-red-400" />
+              </div>
               <div>
-                <AlertDialog.Heading className="text-xl font-black text-slate-900 dark:text-white">Delete this car?</AlertDialog.Heading>
+                <h2 id="car-delete-title" className="text-xl font-black text-slate-900 dark:text-white">Delete this car?</h2>
                 <p className="mt-1 text-sm font-semibold text-slate-500 dark:text-slate-400">
                   This action cannot be undone.
                 </p>
               </div>
-            </AlertDialog.Header>
-            <AlertDialog.Body className="mt-4">
+            </div>
+            <div className="mt-4">
               <p className="text-sm leading-6 text-slate-600 dark:text-slate-400">
                 You are about to delete{' '}
                 <span className="font-bold text-slate-900 dark:text-white">{currentCar.carName}</span>
                 . It will be removed from your DriveSphere fleet.
               </p>
-            </AlertDialog.Body>
-            <AlertDialog.Footer className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-end">
-              <AlertDialog.CloseTrigger
-                isDisabled={isDeleting}
-                className="inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 transition hover:border-red-200 dark:hover:border-red-900 hover:bg-red-50 dark:hover:bg-red-950/30 hover:text-red-650 dark:hover:text-red-400"
-                aria-label="Close delete confirmation modal"
+            </div>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-end">
+              <button
+                type="button"
+                onClick={() => setIsDeleteOpen(false)}
+                disabled={isDeleting}
+                className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-slate-205 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-3 text-sm font-bold text-slate-700 dark:text-slate-350 hover:border-slate-350 dark:hover:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-800 focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
               >
-                <FaTimes />
-              </AlertDialog.CloseTrigger>
-              <Button
-                onPress={handleDeleteCar}
-                isDisabled={isDeleting}
-                className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-red-650 dark:bg-red-500 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-red-600/20 transition hover:bg-red-700 dark:hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-red-200 disabled:cursor-not-allowed disabled:opacity-70"
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleDeleteCar}
+                disabled={isDeleting}
+                className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-red-600 dark:bg-red-500 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-red-600/20 transition hover:bg-red-700 dark:hover:bg-red-600 focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
               >
                 <FaTrash className="text-xs" />
                 {isDeleting ? 'Deleting...' : 'Delete Car'}
-              </Button>
-            </AlertDialog.Footer>
-          </AlertDialog.Dialog>
-        </AlertDialog.Container>
-      </AlertDialog>
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </>
   )
 }
 
 const inputClass =
   'mt-2 w-full rounded-lg border border-slate-200 dark:border-slate-850 bg-slate-50 dark:bg-slate-950 px-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-green-500 dark:focus:border-green-400 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-green-105 dark:focus:ring-green-950/40'
+
+const getInputClass = () => inputClass
 
 const InfoTile = ({ icon, label, value }) => (
   <div className="rounded-xl bg-slate-50 dark:bg-slate-950 p-3">

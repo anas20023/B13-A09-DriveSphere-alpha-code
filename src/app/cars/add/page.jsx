@@ -123,7 +123,7 @@ const AddCar = () => {
     event.preventDefault()
 
     if (!validateForm()) {
-      toast.error('Please fix the highlighted fields.')
+      // Validation errors are displayed under each field. Do not show toast here.
       return
     }
 
@@ -177,8 +177,10 @@ const AddCar = () => {
 
   const inputClass =
     'mt-2 w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-green-500 dark:focus:border-green-400 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-green-100 dark:focus:ring-green-950/40'
+  const invalidInputClass =
+    'border-red-500 dark:border-red-400 focus:border-red-500 dark:focus:border-red-400 focus:ring-red-100 dark:focus:ring-red-950/40'
   const labelClass = 'text-sm font-bold text-slate-800 dark:text-slate-250'
-  const errorClass = 'mt-2 text-sm font-semibold text-red-650 dark:text-red-400'
+  const errorClass = 'mt-2 text-sm font-semibold text-red-600 dark:text-red-400'
 
   return (
     <main className="bg-slate-50 dark:bg-slate-950 transition-colors duration-300 min-h-screen">
@@ -238,7 +240,8 @@ const AddCar = () => {
                     onChange={handleChange}
                     placeholder="Hyundai Tucson"
                     required
-                    className={inputClass}
+                    aria-invalid={Boolean(errors.carName)}
+                    className={`${inputClass} ${errors.carName ? invalidInputClass : ''}`}
                   />
                 </Field>
 
@@ -258,7 +261,8 @@ const AddCar = () => {
                     min="1"
                     step="1"
                     required
-                    className={inputClass}
+                    aria-invalid={Boolean(errors.dailyRentPrice)}
+                    className={`${inputClass} ${errors.dailyRentPrice ? invalidInputClass : ''}`}
                   />
                 </Field>
 
@@ -274,7 +278,8 @@ const AddCar = () => {
                     value={formData.carType}
                     onChange={handleChange}
                     required
-                    className={`${inputClass} cursor-pointer`}
+                    aria-invalid={Boolean(errors.carType)}
+                    className={`${inputClass} cursor-pointer ${errors.carType ? invalidInputClass : ''}`}
                   >
                     <option value="">Select car type</option>
                     {carTypes.map((type) => (
@@ -301,7 +306,8 @@ const AddCar = () => {
                     min="1"
                     step="1"
                     required
-                    className={inputClass}
+                    aria-invalid={Boolean(errors.seatCapacity)}
+                    className={`${inputClass} ${errors.seatCapacity ? invalidInputClass : ''}`}
                   />
                 </Field>
 
@@ -319,7 +325,8 @@ const AddCar = () => {
                     onChange={handleChange}
                     placeholder="Khulna"
                     required
-                    className={inputClass}
+                    aria-invalid={Boolean(errors.pickupLocation)}
+                    className={`${inputClass} ${errors.pickupLocation ? invalidInputClass : ''}`}
                   />
                 </Field>
 
@@ -335,7 +342,10 @@ const AddCar = () => {
                     value={formData.availabilityStatus}
                     onChange={handleChange}
                     required
-                    className={`${inputClass} cursor-pointer`}
+                    aria-invalid={Boolean(errors.availabilityStatus)}
+                    className={`${inputClass} cursor-pointer ${
+                      errors.availabilityStatus ? invalidInputClass : ''
+                    }`}
                   >
                     <option value="">Select status</option>
                     {availabilityOptions.map((status) => (
@@ -362,7 +372,8 @@ const AddCar = () => {
                     min="0"
                     step="1"
                     required
-                    className={inputClass}
+                    aria-invalid={Boolean(errors.booked)}
+                    className={`${inputClass} ${errors.booked ? invalidInputClass : ''}`}
                   />
                 </Field>
 
@@ -380,7 +391,8 @@ const AddCar = () => {
                     onChange={handleChange}
                     placeholder="https://images.unsplash.com/photo-1567938637147-f2d28cf0478c"
                     required
-                    className={inputClass}
+                    aria-invalid={Boolean(errors.imageURL)}
+                    className={`${inputClass} ${errors.imageURL ? invalidInputClass : ''}`}
                   />
                 </Field>
 
@@ -399,7 +411,10 @@ const AddCar = () => {
                       placeholder="Modern SUV ideal for family trips and long drives."
                       rows={5}
                       required
-                      className={`${inputClass} resize-none leading-7`}
+                      aria-invalid={Boolean(errors.description)}
+                      className={`${inputClass} resize-none leading-7 ${
+                        errors.description ? invalidInputClass : ''
+                      }`}
                     />
                   </Field>
                 </div>
