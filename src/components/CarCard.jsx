@@ -48,11 +48,11 @@ const CarCard = ({ car }) => {
 
                 {/* Details with icons */}
                 <div className="space-y-3.5 mb-4 mt-1 text-sm flex-1">
-                    <div className="flex items-center gap-2 text-slate-650 dark:text-slate-350 font-medium">
+                    <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400 font-medium">
                         <FaMapMarkerAlt className="w-4 h-4 text-green-600 dark:text-green-400" />
                         <span className="capitalize">{car.pickupLocation.toLowerCase()}</span>
                     </div>
-                    <p className="text-slate-500 dark:text-slate-450 line-clamp-2 text-sm leading-relaxed">
+                    <p className="text-slate-500 dark:text-slate-500 line-clamp-2 text-sm leading-relaxed">
                         {car.description}
                     </p>
                 </div>

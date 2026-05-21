@@ -16,9 +16,11 @@ export default function SmoothScroll() {
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
-      smoothWheel: true,
+      smoothWheel: false,
       wheelMultiplier: 1,
       touchMultiplier: 1.5,
+      syncTouch: true,
+      syncTouchLerp: 0.075,
     })
 
     // Update ScrollTrigger on scroll

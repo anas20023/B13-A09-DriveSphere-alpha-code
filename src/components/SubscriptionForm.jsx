@@ -46,7 +46,7 @@ const SubscriptionForm = () => {
                                     Stay updated with our latest journeys
                                 </h2>
 
-                                <p className="mt-5 text-base leading-relaxed text-slate-655 dark:text-slate-350 sm:text-lg">
+                                <p className="mt-5 text-base leading-relaxed text-slate-600 dark:text-slate-400 sm:text-lg">
                                     Get exclusive travel deals, destination guides,
                                     and premium offers directly in your inbox.
                                 </p>

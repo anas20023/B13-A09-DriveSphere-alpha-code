@@ -123,7 +123,7 @@ export default function Navbar() {
                                     <div className="absolute right-0 top-12 z-50 w-56 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-xl animate-in fade-in slide-in-from-top-2 duration-250">
                                         <div className="mb-3 px-1">
                                             <p className="text-xs text-slate-400">Signed in as</p>
-                                            <p className="text-sm font-bold truncate text-slate-850 dark:text-slate-200">{user.name}</p>
+                                            <p className="text-sm font-bold truncate text-slate-800 dark:text-slate-200">{user.name}</p>
                                         </div>
                                         <hr className="border-slate-100 dark:border-slate-800 my-2" />
                                         <ul className="flex flex-col gap-2.5 text-sm font-medium">

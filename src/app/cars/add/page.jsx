@@ -179,7 +179,7 @@ const AddCar = () => {
     'mt-2 w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-green-500 dark:focus:border-green-400 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-green-100 dark:focus:ring-green-950/40'
   const invalidInputClass =
     'border-red-500 dark:border-red-400 focus:border-red-500 dark:focus:border-red-400 focus:ring-red-100 dark:focus:ring-red-950/40'
-  const labelClass = 'text-sm font-bold text-slate-800 dark:text-slate-250'
+  const labelClass = 'text-sm font-bold text-slate-800 dark:text-slate-200'
   const errorClass = 'mt-2 text-sm font-semibold text-red-600 dark:text-red-400'
 
   return (
@@ -193,7 +193,7 @@ const AddCar = () => {
             <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
               Add a rental-ready vehicle to DriveSphere
             </h1>
-            <p className="mt-5 text-base leading-7 text-green-105/70 dark:text-slate-350 sm:text-lg">
+            <p className="mt-5 text-base leading-7 text-green-105/70 dark:text-slate-400 sm:text-lg">
               Fill in every vehicle detail, set the availability status, and keep
               your fleet information consistent for customers.
             </p>
@@ -440,7 +440,7 @@ const AddCar = () => {
 
           <AnimateIn variant="scaleIn" delay={0.15}>
             <aside className="h-fit overflow-hidden rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl dark:shadow-slate-950/40">
-              <div className="relative h-56 overflow-hidden bg-slate-150 dark:bg-slate-850">
+              <div className="relative h-56 overflow-hidden bg-slate-100 dark:bg-slate-800">
                 {imagePreview ? (
                   <Image
                     src={imagePreview}
@@ -459,13 +459,13 @@ const AddCar = () => {
                 <span className="absolute left-4 top-4 rounded-full bg-green-600 dark:bg-green-500 px-3 py-1 text-xs font-bold text-white shadow-md">
                   {formData.availabilityStatus || 'Status'}
                 </span>
-                <span className="absolute bottom-4 right-4 rounded-lg bg-white/95 dark:bg-slate-950/95 border border-slate-100/30 dark:border-slate-800/30 px-3 py-1 text-sm font-extrabold text-green-850 dark:text-green-400 shadow-md">
+                <span className="absolute bottom-4 right-4 rounded-lg bg-white/95 dark:bg-slate-950/95 border border-slate-100/30 dark:border-slate-800/30 px-3 py-1 text-sm font-extrabold text-green-800 dark:text-green-400 shadow-md">
                   ${formData.dailyRentPrice || '0'} / day
                 </span>
               </div>
 
               <div className="p-5">
-                <p className="mb-3 inline-flex items-center gap-2 rounded-full bg-green-50 dark:bg-green-950/40 px-3 py-1 text-xs font-bold text-green-705 dark:text-green-300">
+                <p className="mb-3 inline-flex items-center gap-2 rounded-full bg-green-50 dark:bg-green-950/40 px-3 py-1 text-xs font-bold text-green-700 dark:text-green-300">
                   <FaCarSide />
                   {formData.carType || 'Car type'}
                 </p>
@@ -479,7 +479,7 @@ const AddCar = () => {
                       <FaUsers className="text-green-600 dark:text-green-400" />
                       {formData.seatCapacity || '0'} seats
                     </p>
-                    <p className="mt-1 text-xs text-slate-500 dark:text-slate-450">Capacity</p>
+                    <p className="mt-1 text-xs text-slate-500 dark:text-slate-500">Capacity</p>
                   </div>
                   <div className="rounded-xl bg-slate-50 dark:bg-slate-950 p-3">
                     <p className="flex items-center gap-2 font-bold text-slate-900 dark:text-white">
@@ -488,11 +488,11 @@ const AddCar = () => {
                         {formData.pickupLocation || 'Pickup'}
                       </span>
                     </p>
-                    <p className="mt-1 text-xs text-slate-500 dark:text-slate-450">Location</p>
+                    <p className="mt-1 text-xs text-slate-500 dark:text-slate-500">Location</p>
                   </div>
                 </div>
 
-                <p className="mt-4 line-clamp-4 text-sm leading-6 text-slate-650 dark:text-slate-400">
+                <p className="mt-4 line-clamp-4 text-sm leading-6 text-slate-600 dark:text-slate-400">
                   {formData.description ||
                     'A short vehicle description will appear here as you type.'}
                 </p>

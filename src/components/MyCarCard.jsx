@@ -355,7 +355,7 @@ const MyCarCard = ({ car }) => {
             noValidate
             className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl animate-in fade-in zoom-in-95 duration-200"
           >
-            <div className="flex items-start justify-between gap-4 border-b border-slate-150 dark:border-slate-800 p-5 sm:p-6">
+            <div className="flex items-start justify-between gap-4 border-b border-slate-100 dark:border-slate-800 p-5 sm:p-6">
               <div>
                 <p className="mb-2 inline-flex w-fit items-center gap-2 rounded-full bg-green-50 dark:bg-green-950/40 px-3 py-1 text-xs font-bold text-green-700 dark:text-green-300">
                   <FaCarSide />
@@ -369,7 +369,7 @@ const MyCarCard = ({ car }) => {
                 type="button"
                 onClick={() => setIsUpdateOpen(false)}
                 disabled={isUpdating}
-                className="inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 text-slate-505 dark:text-slate-400 transition hover:border-green-200 dark:hover:border-green-900 hover:bg-green-50 dark:hover:bg-green-950/40 hover:text-green-700 dark:hover:text-green-400 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 transition hover:border-green-200 dark:hover:border-green-900 hover:bg-green-50 dark:hover:bg-green-950/40 hover:text-green-700 dark:hover:text-green-400 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60"
                 aria-label="Close update modal"
               >
                 <FaTimes />
@@ -521,7 +521,7 @@ const MyCarCard = ({ car }) => {
               </div>
 
               <div className="sm:col-span-2">
-                <div className="relative h-44 overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-850 text-slate-500 dark:text-slate-400">
+                <div className="relative h-44 overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400">
                   {imagePreview ? (
                     <Image
                       src={imagePreview}
@@ -545,7 +545,7 @@ const MyCarCard = ({ car }) => {
                 type="button"
                 onClick={() => setIsUpdateOpen(false)}
                 disabled={isUpdating}
-                className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-slate-205 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-3 text-sm font-bold text-slate-700 dark:text-slate-350 hover:border-slate-350 dark:hover:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-800 focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
+                className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-3 text-sm font-bold text-slate-700 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-800 focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
               >
                 Cancel
               </button>
@@ -598,7 +598,7 @@ const MyCarCard = ({ car }) => {
                 type="button"
                 onClick={() => setIsDeleteOpen(false)}
                 disabled={isDeleting}
-                className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-slate-205 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-3 text-sm font-bold text-slate-700 dark:text-slate-350 hover:border-slate-350 dark:hover:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-800 focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
+                className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-3 text-sm font-bold text-slate-700 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-800 focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
               >
                 Cancel
               </button>
@@ -620,7 +620,7 @@ const MyCarCard = ({ car }) => {
 }
 
 const inputClass =
-  'mt-2 w-full rounded-lg border border-slate-200 dark:border-slate-850 bg-slate-50 dark:bg-slate-950 px-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-green-500 dark:focus:border-green-400 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-green-105 dark:focus:ring-green-950/40'
+  'mt-2 w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 px-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-green-500 dark:focus:border-green-400 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-green-100 dark:focus:ring-green-950/40'
 
 const getInputClass = () => inputClass
 
@@ -630,13 +630,13 @@ const InfoTile = ({ icon, label, value }) => (
       <span className="shrink-0 text-green-600 dark:text-green-400">{icon}</span>
       <span className="min-w-0 truncate">{value}</span>
     </p>
-    <p className="mt-1 text-xs text-slate-500 dark:text-slate-450">{label}</p>
+    <p className="mt-1 text-xs text-slate-500 dark:text-slate-500">{label}</p>
   </div>
 )
 
 const UpdateField = ({ children, error, icon, label }) => (
   <label className="block">
-    <span className="flex items-center gap-2 text-sm font-bold text-slate-800 dark:text-slate-250">
+    <span className="flex items-center gap-2 text-sm font-bold text-slate-800 dark:text-slate-200">
       <span className="text-green-600 dark:text-green-400">{icon}</span>
       {label}
     </span>

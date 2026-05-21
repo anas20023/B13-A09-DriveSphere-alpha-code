@@ -80,7 +80,7 @@ const HeroSection = ({ cars }) => {
                         </motion.h1>
                         <motion.p 
                             variants={itemVariants}
-                            className="mt-5 max-w-xl text-base leading-7 text-gray-200 dark:text-slate-350 sm:text-lg"
+                            className="mt-5 max-w-xl text-base leading-7 text-gray-200 dark:text-slate-400 sm:text-lg"
                         >
                             Choose from comfortable, stylish, and reliable cars with
                             clear pricing and quick booking.

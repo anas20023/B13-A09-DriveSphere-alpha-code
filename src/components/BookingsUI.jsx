@@ -302,7 +302,7 @@ const BookingsUI = ({ bookings }) => {
             <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
               Track every DriveSphere reservation
             </h1>
-            <p className="mt-5 text-base leading-7 text-green-100/70 dark:text-slate-350 sm:text-lg">
+            <p className="mt-5 text-base leading-7 text-green-100/70 dark:text-slate-400 sm:text-lg">
               Review booked cars, rental dates, driver requests, and notes from
               your reservation history.
             </p>
@@ -418,7 +418,7 @@ const BookingsUI = ({ bookings }) => {
                             </div>
 
                             <div className="mt-4 rounded-xl border border-slate-100 dark:border-slate-800/50 bg-slate-50 dark:bg-slate-950 p-4">
-                              <p className="mb-2 flex items-center gap-2 text-sm font-bold text-slate-850 dark:text-slate-205">
+                              <p className="mb-2 flex items-center gap-2 text-sm font-bold text-slate-800 dark:text-slate-200">
                                 <FaRegStickyNote className="text-green-600 dark:text-green-450" />
                                 Booking Note
                               </p>
@@ -520,8 +520,8 @@ const BookingsUI = ({ bookings }) => {
               </BookingField>
 
               <div>
-                <p className="mb-2 flex items-center gap-2 text-sm font-bold text-slate-800 dark:text-slate-250">
-                  <FaUserTie className="text-green-600 dark:text-green-455" />
+                <p className="mb-2 flex items-center gap-2 text-sm font-bold text-slate-800 dark:text-slate-200">
+                  <FaUserTie className="text-green-600 dark:text-green-400" />
                   Driver Needed
                 </p>
                 <div className="grid grid-cols-2 gap-2">
@@ -529,8 +529,8 @@ const BookingsUI = ({ bookings }) => {
                     <label
                       key={option}
                       className={`flex cursor-pointer items-center justify-center rounded-lg border px-3 py-2.5 text-sm font-bold transition ${formData.drived_needed === option
-                          ? 'border-green-600 dark:border-green-500 bg-green-50 dark:bg-green-950/30 text-green-750 dark:text-green-400 ring-4 ring-green-100 dark:ring-green-950/40'
-                          : 'border-slate-200 dark:border-slate-800 bg-slate-55 dark:bg-slate-950 text-slate-600 dark:text-slate-400 hover:border-green-200 dark:hover:border-green-800/60'
+                          ? 'border-green-600 dark:border-green-500 bg-green-50 dark:bg-green-950/30 text-green-700 dark:text-green-400 ring-4 ring-green-100 dark:ring-green-950/40'
+                          : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-400 hover:border-green-200 dark:hover:border-green-800/60'
                         }`}
                     >
                       <input
@@ -546,7 +546,7 @@ const BookingsUI = ({ bookings }) => {
                   ))}
                 </div>
                 {errors.drived_needed ? (
-                  <p className="mt-2 text-sm font-semibold text-red-650 dark:text-red-400">
+                  <p className="mt-2 text-sm font-semibold text-red-600 dark:text-red-400">
                     {errors.drived_needed}
                   </p>
                 ) : null}
@@ -575,7 +575,7 @@ const BookingsUI = ({ bookings }) => {
                 type="button"
                 onClick={() => setIsUpdateOpen(false)}
                 disabled={isUpdating}
-                className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-3 text-sm font-bold text-slate-700 dark:text-slate-350 hover:border-slate-350 dark:hover:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-800 focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
+                className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-3 text-sm font-bold text-slate-700 dark:text-slate-400 hover:border-slate-350 dark:hover:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-800 focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
               >
                 Cancel
               </button>
@@ -631,11 +631,11 @@ const BookingsUI = ({ bookings }) => {
               </p>
             </div>
 
-            <div className="mt-6 flex flex-col gap-3 border-t border-slate-100 dark:border-slate-800 bg-slate-55 dark:bg-slate-950/60 p-5 sm:flex-row sm:justify-end sm:p-6">
+            <div className="mt-6 flex flex-col gap-3 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/60 p-5 sm:flex-row sm:justify-end sm:p-6">
               <button
                 type="button"
                 onClick={() => setIsDeleteOpen(false)}
-                className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-3 text-sm font-bold text-slate-700 dark:text-slate-350 hover:bg-gray-105 dark:hover:bg-slate-800"
+                className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 py-3 text-sm font-bold text-slate-700 dark:text-slate-400 hover:bg-gray-100 dark:hover:bg-slate-800"
               >
                 Cancel
               </button>
@@ -656,7 +656,7 @@ const BookingsUI = ({ bookings }) => {
 }
 
 const inputClass =
-  'mt-2 w-full rounded-lg border border-slate-200 dark:border-slate-850 bg-slate-50 dark:bg-slate-950 px-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-green-500 dark:focus:border-green-400 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-green-105 dark:focus:ring-green-950/40'
+  'mt-2 w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 px-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-green-500 dark:focus:border-green-400 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-green-100 dark:focus:ring-green-950/40'
 
 const SummaryCard = ({ icon, label, value }) => (
   <div className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-md dark:shadow-slate-950/30">
@@ -674,22 +674,22 @@ const SummaryCard = ({ icon, label, value }) => (
 
 const InfoTile = ({ icon, label, value }) => (
   <div className="rounded-xl bg-slate-50 dark:bg-slate-950 p-3">
-    <p className="flex items-center gap-2 font-bold text-slate-850 dark:text-slate-200">
+    <p className="flex items-center gap-2 font-bold text-slate-800 dark:text-slate-200">
       <span className="text-green-600 dark:text-green-400">{icon}</span>
       <span className="line-clamp-1">{value}</span>
     </p>
-    <p className="mt-1 text-xs text-slate-500 dark:text-slate-450">{label}</p>
+    <p className="mt-1 text-xs text-slate-500 dark:text-slate-500">{label}</p>
   </div>
 )
 
 const BookingField = ({ children, error, icon, label }) => (
   <label className="block">
-    <span className="flex items-center gap-2 text-sm font-bold text-slate-800 dark:text-slate-250">
+    <span className="flex items-center gap-2 text-sm font-bold text-slate-800 dark:text-slate-200">
       <span className="text-green-600 dark:text-green-400">{icon}</span>
       {label}
     </span>
     {children}
-    {error ? <p className="mt-2 text-sm font-semibold text-red-650 dark:text-red-400">{error}</p> : null}
+    {error ? <p className="mt-2 text-sm font-semibold text-red-600 dark:text-red-400">{error}</p> : null}
   </label>
 )
 
